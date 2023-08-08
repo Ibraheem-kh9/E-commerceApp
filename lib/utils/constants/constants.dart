@@ -1,0 +1,1 @@
+const productListLink = 'https://dummyjson.com/products';
