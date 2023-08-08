@@ -1,6 +1,7 @@
-import 'package:e_commerce_app/view/homepage_sc.dart';
+
 import 'package:flutter/material.dart';
-import '../utils/constant_color.dart';
+import '../../utils/constants/constant_color.dart';
+import 'homepage_sc.dart';
 
 class SplashPageSc extends StatefulWidget {
   const SplashPageSc({Key? key}) : super(key: key);
@@ -31,7 +32,7 @@ class _SplashPageScState extends State<SplashPageSc> {
       body: SafeArea(
         child: Center(
           child: CircularProgressIndicator(
-            color: kIconColor,
+            color: AppColor.kIconColor,
           ),
         ),
       ),

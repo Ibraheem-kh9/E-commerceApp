@@ -1,27 +1,29 @@
 import 'package:e_commerce_app/models/users_model.dart';
-import 'package:e_commerce_app/utils/constant_color.dart';
-import 'package:e_commerce_app/view/screens/forgot_password_sc.dart';
-import 'package:e_commerce_app/view/screens/signin_page_sc.dart';
-import 'package:e_commerce_app/view/screens/wrapper_page_sc.dart';
+import 'package:e_commerce_app/utils/constants/constant_color.dart';
+import 'package:e_commerce_app/view/screens/auth_screens/register_email_verified_sc.dart';
+import 'package:e_commerce_app/view/screens/homepage_sc.dart';
 import 'package:e_commerce_app/view/widgets/login_screen_widget/login_button_widget.dart';
 import 'package:e_commerce_app/view/widgets/login_screen_widget/login_or_widget.dart';
 import 'package:e_commerce_app/view/widgets/login_screen_widget/login_text_button_widget.dart';
 import 'package:e_commerce_app/view/widgets/login_screen_widget/login_textform_field_widget.dart';
 import 'package:e_commerce_app/view/widgets/login_screen_widget/others_ways_login_widget.dart';
 import 'package:e_commerce_app/view_model/app_language_view_model.dart';
-import 'package:e_commerce_app/view_model/authenticate_view_model.dart';
+import 'package:e_commerce_app/view_model/login_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 import 'package:e_commerce_app/components/app_local.dart';
+
+import '../../../utils/constants/app_routes.dart';
+
 
 class LoginSc extends StatelessWidget {
   const LoginSc({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final authViewModel = Provider.of<AuthenticateViewModel>(context, listen: false);
-    final languageViewModel = Provider.of<AppLanguageViewModel>(context);
+    final authViewModel =
+        Provider.of<LoginViewModel>(context, listen: false);
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -45,7 +47,8 @@ class LoginSc extends StatelessWidget {
                   Expanded(
                     flex: 2,
                     child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 3.5.h,vertical: 3.5.h),
+                      padding: EdgeInsets.symmetric(
+                          horizontal: 3.5.h, vertical: 3.5.h),
                       child: Text(
                         AppLocale.of(context).getTranslated('login_title')!,
                         style: TextStyle(
@@ -59,7 +62,7 @@ class LoginSc extends StatelessWidget {
                   //// Widget of E-Mail Text FormField with style --------------------
                   Expanded(
                     child: LoginTextFormFieldWidget(
-                      textEditingController: authViewModel.emailCtrl,
+                      textEditingController: authViewModel.logEmailCtrl,
                       textInputType: TextInputType.emailAddress,
                       formIcon: Icons.email_outlined,
                       obscureText: false,
@@ -83,11 +86,11 @@ class LoginSc extends StatelessWidget {
                   ),
 
                   //// Widget of Password Text FormField with style ------------------
-                  Consumer<AuthenticateViewModel>(
+                  Consumer<LoginViewModel>(
                     builder: (context, authNotify, child) {
                       return Expanded(
                         child: LoginTextFormFieldWidget(
-                          textEditingController: authViewModel.passwordCtrl,
+                          textEditingController: authViewModel.logPasswordCtrl,
                           hintText: AppLocale.of(context)
                               .getTranslated('login_password_hint')!,
                           formIcon: Icons.lock_outline,
@@ -95,7 +98,7 @@ class LoginSc extends StatelessWidget {
                           obscureText: authViewModel.passToggle,
                           suffixWidget: InkWell(
                             onTap: () {
-                              authNotify.setPassToggle();
+                              authNotify.setLogPassToggle();
                             },
                             child: Icon(authViewModel.passToggle
                                 ? Icons.visibility_off
@@ -119,14 +122,7 @@ class LoginSc extends StatelessWidget {
                     flex: 1,
                     child: LoginTextButtonWidget(
                       onPress: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) {
-                              return ForgetPasswordSc();
-                            },
-                          ),
-                        );
+                        Navigator.pushReplacementNamed(context, AppRoute.forgotPassPage);
                       },
                       text: AppLocale.of(context)
                           .getTranslated('login_forgot_pass')!,
@@ -134,10 +130,11 @@ class LoginSc extends StatelessWidget {
                       size: 10.sp,
                       style: ButtonStyle(
                         splashFactory: NoSplash.splashFactory,
-                        overlayColor: const MaterialStatePropertyAll(Colors.transparent),
+                        overlayColor:
+                            const MaterialStatePropertyAll(Colors.transparent),
                         padding: MaterialStatePropertyAll(
-                            EdgeInsets.only(right: 8.h,left: 8.h,top: 1.h)),
-                         alignment: Alignment.topCenter,
+                            EdgeInsets.only(right: 8.h, left: 8.h, top: 1.h)),
+                        alignment: Alignment.topCenter,
                       ),
                     ),
                   ),
@@ -152,22 +149,23 @@ class LoginSc extends StatelessWidget {
                         if (authViewModel.loginFormFiledKey.currentState!
                             .validate()) {
                           UsersModel userModel = UsersModel(
-                            email: authViewModel.emailCtrl.text,
-                            password: authViewModel.passwordCtrl.text,
+                            email: authViewModel.logEmailCtrl.text,
+                            password: authViewModel.logPasswordCtrl.text,
                           );
-                          await authViewModel
-                              .signInWithEmailAndPassword(userModel);
-                          Navigator.pushAndRemoveUntil(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) {
-                                return WrapperPageSc();
-                              },
-                            ),
-                            (route) => false,
-                          );
-                          authViewModel.emailCtrl.clear();
-                          authViewModel.passwordCtrl.clear();
+                          await authViewModel.signInWithEmailAndPassword(userModel);
+
+                          // Navigator.pushAndRemoveUntil(
+                          //   context,
+                          //   MaterialPageRoute(
+                          //     builder: (context) {
+                          //       return WrapperPageSc();
+                          //     },
+                          //   ),
+                          //       (route) => false,
+                          // );
+
+                          authViewModel.logEmailCtrl.clear();
+                          authViewModel.logPasswordCtrl.clear();
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
@@ -200,12 +198,8 @@ class LoginSc extends StatelessWidget {
                       children: [
                         OthersWaysLoginWidget(
                           onClickButton: () {
+                            ///TODO : Complete Sign In with Google Auth---------
                             authViewModel.signInWithGoogle();
-                            //     .whenComplete(() {
-                            //  Navigator.push(context, MaterialPageRoute(builder: (context){
-                            //    return CheckGoogleSignSc();
-                            //  }));
-                            // });
                           },
                           imageSource: 'assets/images/google_icon.png',
                         ),
@@ -213,7 +207,7 @@ class LoginSc extends StatelessWidget {
                           width: 5.w,
                         ),
 
-                        /// TODO: complete login by anonymous user--------------------
+                        /// TODO: complete login by anonymous user--------------
                         OthersWaysLoginWidget(
                           onClickButton: () {},
                           imageSource: 'assets/images/Anonymous.png',
@@ -222,7 +216,7 @@ class LoginSc extends StatelessWidget {
                     ),
                   ),
                   Expanded(
-                    flex: 2,
+                    flex: 3,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -240,14 +234,7 @@ class LoginSc extends StatelessWidget {
                         //// Text button of register ---------------------------
                         LoginTextButtonWidget(
                           onPress: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) {
-                                  return SignInSc();
-                                },
-                              ),
-                            );
+                            Navigator.pushReplacementNamed(context, AppRoute.register);
                           },
                           text: AppLocale.of(context)
                               .getTranslated('login_register')!,
@@ -255,7 +242,8 @@ class LoginSc extends StatelessWidget {
                           size: 11.sp,
                           style: const ButtonStyle(
                             splashFactory: NoSplash.splashFactory,
-                            overlayColor: MaterialStatePropertyAll(Colors.transparent),
+                            overlayColor:
+                                MaterialStatePropertyAll(Colors.transparent),
                           ),
                         ),
                       ],

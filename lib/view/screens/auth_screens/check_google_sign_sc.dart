@@ -1,10 +1,10 @@
 
-import 'package:e_commerce_app/view_model/authenticate_view_model.dart';
+import 'package:e_commerce_app/view_model/login_view_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'homepage_sc.dart';
+import '../homepage_sc.dart';
 import 'login_page_sc.dart';
 
 class CheckGoogleSignSc extends StatelessWidget {
@@ -12,7 +12,7 @@ class CheckGoogleSignSc extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final authVM = Provider.of<AuthenticateViewModel>(context);
+    final authVM = Provider.of<LoginViewModel>(context);
     return FutureBuilder(
         future: authVM.gUser!.authentication,
         builder: (context , AsyncSnapshot snap){

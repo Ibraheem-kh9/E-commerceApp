@@ -1,7 +1,7 @@
-import 'package:e_commerce_app/utils/constant_color.dart';
+import 'package:e_commerce_app/utils/constants/constant_color.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../view_model/category_view_model.dart';
+import '../../view_model/category_view_model.dart';
 
 class ItemsCategoriesSc extends StatelessWidget {
   const ItemsCategoriesSc({Key? key}) : super(key: key);
@@ -10,7 +10,7 @@ class ItemsCategoriesSc extends StatelessWidget {
   Widget build(BuildContext context) {
     CategoryViewModel catViewModel = context.watch<CategoryViewModel>();
     return Scaffold(
-      backgroundColor: kBackgroundColor,//const Color.fromRGBO(124, 165, 184, 0.65),
+      backgroundColor: AppColor.kBackgroundColor,//const Color.fromRGBO(124, 165, 184, 0.65),
       body: SafeArea(
         child: ListView.builder(
           itemCount: catViewModel.categoryModel!.length,
@@ -52,7 +52,7 @@ class ItemsCategoriesSc extends StatelessWidget {
                         onPressed: () {},
                         icon: Icon(
                           Icons.arrow_forward_outlined,
-                          color: kMainColor,
+                          color: AppColor.kMainColor,
                         ),
                       )
                     ],

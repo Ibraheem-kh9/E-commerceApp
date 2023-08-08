@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/material.dart';
 
 ProductModel productModelFromJson(String str) => ProductModel.fromJson(json.decode(str));
 
@@ -45,6 +46,9 @@ class Product {
     this.category,
     this.thumbnail,
     this.images,
+    this.isFavorite = false,
+    this.quantity = 0,
+    this.totalProductPrice = 0.0,
   });
 
   int? id;
@@ -58,6 +62,10 @@ class Product {
   String? category;
   String? thumbnail;
   List<String>? images;
+  late bool? isFavorite ;
+  int quantity ;
+  // change dynamic to double
+  double? totalProductPrice;
 
   factory Product.fromJson(Map<String, dynamic> json) => Product(
     id: json["id"],
@@ -71,6 +79,10 @@ class Product {
     category: json["category"],
     thumbnail: json["thumbnail"],
     images: json["images"] == null ? [] : List<String>.from(json["images"]!.map((x) => x)),
+    // should be else false to avoid the null value when fetch api product
+    isFavorite: json["isFavorite"] ?? false,
+    quantity: json["quantity"] ?? 0,
+    totalProductPrice: json["totalProductPrice"] ?? 0.0,
   );
 
   Map<String, dynamic> toJson() => {
@@ -85,24 +97,8 @@ class Product {
     "category": category,
     "thumbnail": thumbnail,
     "images": images == null ? [] : List<dynamic>.from(images!.map((x) => x)),
+    "isFavorite": isFavorite,
+    "quantity": quantity,
+    "totalProductPrice": totalProductPrice,
   };
 }
-
-// class ImagesModel{
-//   final String imagesUrl;
-//   const ImagesModel({required this.imagesUrl});
-//
-//   factory ImagesModel.fromJson(Map<String, dynamic> json) {
-//     return ImagesModel(
-//       imagesUrl: json["imagesUrl"],
-//     );
-//   }
-//
-//   Map<String, dynamic> toJson() {
-//     return {
-//       "imagesUrl": this.imagesUrl,
-//     };
-//   }
-// //
-//
-// }

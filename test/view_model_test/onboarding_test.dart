@@ -2,6 +2,7 @@ import 'package:e_commerce_app/view_model/onboarding_view_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main(){
+  TestWidgetsFlutterBinding.ensureInitialized();
   var changeViewPage = OnBoardingViewModel();
 
   group("Test ScrollBar of List", () {

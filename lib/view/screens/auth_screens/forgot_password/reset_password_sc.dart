@@ -1,16 +1,16 @@
 import 'package:e_commerce_app/components/app_local.dart';
-import 'package:e_commerce_app/view/screens/auth_screens/confirm_reset_password_sc.dart';
-import 'package:e_commerce_app/view/screens/auth_screens/otp_code_sc.dart';
-import 'package:e_commerce_app/view_model/authenticate_view_model.dart';
+import 'package:e_commerce_app/view/screens/auth_screens/forgot_password/confirm_reset_password_sc.dart';
+import 'package:e_commerce_app/view/screens/auth_screens/forgot_password/otp_code_sc.dart';
+import 'package:e_commerce_app/view_model/login_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
-import '../../../utils/constant_color.dart';
-import '../../widgets/forgot_password_widgets/forgot_appbar.dart';
-import '../../widgets/forgot_password_widgets/forgot_test_widget.dart';
-import '../../widgets/login_screen_widget/login_button_widget.dart';
-import '../../widgets/login_screen_widget/login_textform_field_widget.dart';
+import '../../../../utils/constants/constant_color.dart';
+import '../../../widgets/forgot_password_widgets/forgot_appbar.dart';
+import '../../../widgets/forgot_password_widgets/forgot_test_widget.dart';
+import '../../../widgets/login_screen_widget/login_button_widget.dart';
+import '../../../widgets/login_screen_widget/login_textform_field_widget.dart';
 
 class ResetPasswordSc extends StatelessWidget {
   const ResetPasswordSc({super.key});
@@ -18,7 +18,7 @@ class ResetPasswordSc extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     AppLocale locale = AppLocale.of(context);
-    final authViewModel = Provider.of<AuthenticateViewModel>(context);
+    final authViewModel = Provider.of<LoginViewModel>(context);
     return Scaffold(
       backgroundColor: AppColor.backgroundPageViewColor,
       appBar: ForgotAppBarWidget(),
@@ -48,14 +48,14 @@ class ResetPasswordSc extends StatelessWidget {
             height: 3.h,
           ),
           LoginTextFormFieldWidget(
-            textEditingController: authViewModel.passwordCtrl,
+            textEditingController: authViewModel.logPasswordCtrl,
             hintText: locale.getTranslated('reset_pass_pass_hint')!,
             formIcon: Icons.lock_outline,
             textInputType: TextInputType.visiblePassword,
             obscureText: authViewModel.passToggle,
             suffixWidget: InkWell(
               onTap: () {
-                authViewModel.setPassToggle();
+                authViewModel.setLogPassToggle();
               },
               child: Icon(authViewModel.passToggle
                   ? Icons.visibility_off
@@ -71,14 +71,14 @@ class ResetPasswordSc extends StatelessWidget {
             },
           ),
           LoginTextFormFieldWidget(
-            textEditingController: authViewModel.passwordCtrl,
+            textEditingController: authViewModel.logPasswordCtrl,
             hintText: locale.getTranslated('reset_pass_pass_hint_confirm')!,
             formIcon: Icons.lock_outline,
             textInputType: TextInputType.visiblePassword,
             obscureText: authViewModel.passToggle,
             suffixWidget: InkWell(
               onTap: () {
-                authViewModel.setPassToggle();
+                authViewModel.setLogPassToggle();
               },
               child: Icon(authViewModel.passToggle
                   ? Icons.visibility_off

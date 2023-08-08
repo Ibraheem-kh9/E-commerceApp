@@ -1,19 +1,15 @@
 import 'package:e_commerce_app/models/users_model.dart';
 import 'package:e_commerce_app/utils/constants/app_routes.dart';
 import 'package:e_commerce_app/utils/constants/constant_color.dart';
-import 'package:e_commerce_app/view/screens/auth_screens/register_otp_sc.dart';
 import 'package:e_commerce_app/view/widgets/login_screen_widget/login_button_widget.dart';
 import 'package:e_commerce_app/view/widgets/login_screen_widget/login_textform_field_widget.dart';
 import 'package:e_commerce_app/view_model/register/register_view_model.dart';
-import 'package:e_commerce_app/view_model/login_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
-import 'login_page_sc.dart';
-
-class SignInSc extends StatelessWidget {
-  const SignInSc({Key? key}) : super(key: key);
+class RegisterPageSc extends StatelessWidget {
+  const RegisterPageSc({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -27,22 +23,6 @@ class SignInSc extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Padding(
-                    padding: EdgeInsets.only(left: 1.5.h, top: 2.h),
-                    child: IconButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      icon: Icon(
-                        Icons.arrow_back,
-                        color: AppColor.kIconColor,
-                        size: 4.h,
-                      ),
-                    ),
-                  ),
-                ),
                 Align(
                   alignment: Alignment.center,
                   child: Padding(
@@ -139,7 +119,8 @@ class SignInSc extends StatelessWidget {
                 Consumer<RegisterViewModel>(
                   builder: (context, authNotify, child) {
                     return LoginTextFormFieldWidget(
-                      textEditingController: authRegViewModel.regPasswordConfirmCtrl,
+                      textEditingController:
+                          authRegViewModel.regPasswordConfirmCtrl,
                       hintText: 'Confirm Password',
                       formIcon: Icons.lock_outline,
                       textInputType: TextInputType.visiblePassword,
@@ -154,9 +135,10 @@ class SignInSc extends StatelessWidget {
                       ),
                       validateAction: (value) {
                         if (value!.isEmpty) {
-                          return 'password not matched';
-                        } else if (value.length < 6) {
-                          return 'Password length should be not less than 6 digits, Try Again';
+                          return 'password is Empty';
+                        } else if (value.toString() !=
+                            authRegViewModel.regPasswordCtrl.text) {
+                          return 'Password is not matched';
                         }
                         return null;
                       },
@@ -180,11 +162,7 @@ class SignInSc extends StatelessWidget {
                         email: authRegViewModel.regEmailCtrl.text,
                         password: authRegViewModel.regPasswordCtrl.text,
                       );
-                      await authRegViewModel.registerUser(_userModel,context);
-                      authRegViewModel.regFullNameCtrl.clear();
-                      authRegViewModel.regEmailCtrl.clear();
-                      authRegViewModel.regPasswordCtrl.clear();
-                      authRegViewModel.regPasswordConfirmCtrl.clear();
+                      await authRegViewModel.registerUser(_userModel);
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
@@ -201,6 +179,10 @@ class SignInSc extends StatelessWidget {
                         ),
                       );
                     }
+                    authRegViewModel.regFullNameCtrl.clear();
+                    authRegViewModel.regEmailCtrl.clear();
+                    authRegViewModel.regPasswordCtrl.clear();
+                    authRegViewModel.regPasswordConfirmCtrl.clear();
                   },
                   textButton: 'Create Account',
                 ),
@@ -219,7 +201,8 @@ class SignInSc extends StatelessWidget {
                       ),
                       TextButton(
                         onPressed: () {
-                          Navigator.pop(context);
+                          Navigator.pushReplacementNamed(
+                              context, AppRoute.login);
                           authRegViewModel.regFullNameCtrl.clear();
                           authRegViewModel.regEmailCtrl.clear();
                           authRegViewModel.regPasswordCtrl.clear();

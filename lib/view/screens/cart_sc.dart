@@ -1,6 +1,7 @@
+import 'package:e_commerce_app/components/app_local.dart';
 import 'package:e_commerce_app/models/cart_model.dart';
 import 'package:e_commerce_app/services/db_helper.dart';
-import 'package:e_commerce_app/utils/constant_color.dart';
+import 'package:e_commerce_app/utils/constants/constant_color.dart';
 import 'package:e_commerce_app/view/appbar_widget.dart';
 import 'package:e_commerce_app/view_model/cart_view_model.dart';
 import 'package:flutter/material.dart';
@@ -11,18 +12,19 @@ class CartSc extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    AppLocale localeLang = AppLocale.of(context);
     DbHelper dbHelper = DbHelper();
     var cartViewModel = context.watch<CartViewModel>();
     return SafeArea(
       child: Scaffold(
-        backgroundColor: kBackgroundColor,
+        backgroundColor: AppColor.kBackgroundColor,
         appBar: AppBar(
-            backgroundColor: kMainColor,
+            backgroundColor: AppColor.kMainColor,
             // actions: [
             flexibleSpace: Align(
                 alignment: Alignment.center,
                 child: Text(
-                  'My Cart',
+                  localeLang.getTranslated('cart_title')!,
                   style: TextStyle(
                     fontSize: 20.0,
                     color: Colors.white,
@@ -184,7 +186,7 @@ class CartSc extends StatelessWidget {
                           ),
                           Divider(
                             thickness: 1,
-                            color: kMainColor,
+                            color: AppColor.kMainColor,
                             endIndent: 15.0,
                             indent: 15.0,
                           ),
@@ -212,7 +214,7 @@ class CartSc extends StatelessWidget {
                               onPressed: () {},
                               style: ButtonStyle(
                                 backgroundColor:
-                                    MaterialStatePropertyAll(kMainColor),
+                                    MaterialStatePropertyAll(AppColor.kMainColor),
                                 shape: MaterialStatePropertyAll(
                                     RoundedRectangleBorder(
                                         borderRadius: BorderRadius.all(

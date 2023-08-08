@@ -1,5 +1,5 @@
-import 'package:e_commerce_app/utils/constant_color.dart';
-import 'package:e_commerce_app/view/cart_sc.dart';
+import 'package:e_commerce_app/utils/constants/constant_color.dart';
+import 'package:e_commerce_app/view/screens/cart_sc.dart';
 import 'package:e_commerce_app/view/widgets/home_screen_widget/animated_search_bar_widget.dart';
 import 'package:e_commerce_app/view_model/cart_view_model.dart';
 import 'package:e_commerce_app/view_model/product_view_model.dart';
@@ -7,26 +7,29 @@ import 'package:flutter/material.dart';
 import 'package:badges/badges.dart' as badges;
 import 'package:provider/provider.dart';
 
-class AppbarWidget extends StatelessWidget with PreferredSizeWidget {
-  final UserViewModel? userViewModel;
 
-  const AppbarWidget({Key? key, this.userViewModel}) : super(key: key);
+class AppbarWidget extends StatelessWidget implements PreferredSizeWidget {
+  final ProductViewModel? userViewModel;
+  final String appbarTitle;
+  const AppbarWidget({Key? key, this.userViewModel,required this.appbarTitle}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final fontSize = MediaQuery.of(context).textScaleFactor * 20;
+    final width = MediaQuery.of(context).size.width / 100;
     return AppBar(
       automaticallyImplyLeading: false,
-      backgroundColor: kMainColor, //const Color.fromRGBO(40, 44, 52, 1),
+      backgroundColor: AppColor.kMainColor, //const Color.fromRGBO(40, 44, 52, 1),
       title: Text(
-        'H-Store',
+        appbarTitle,
         style: TextStyle(
-            fontWeight: FontWeight.bold, color: Colors.white, fontSize: 23.0),
+            fontWeight: FontWeight.bold, color: Colors.white, fontSize: fontSize * 1.1),
       ),
       actions: [
         SearchBarAnimationWidget(),
 
         Padding(
-          padding: EdgeInsets.only(right: 10.0, left: 0.0),
+          padding: EdgeInsets.only(right: 1 * width, left: 1 * width),
           child: Align(
             alignment: Alignment.center,
             child: badges.Badge(
@@ -37,19 +40,19 @@ class AppbarWidget extends StatelessWidget with PreferredSizeWidget {
               badgeContent: Consumer<CartViewModel>(
                 builder: (context, cartNotify, child) {
                   return Text(
-                    cartNotify.items.length.toString(),
-                    style: TextStyle(color: Colors.white),
+                    cartNotify.getCounter().toString(),
+                    //cartNotify.productCart.length.toString(),
+                    style: const TextStyle(color: Colors.white),
                   );
                 },
               ),
-              badgeAnimation: badges.BadgeAnimation.rotation(
+              badgeAnimation: const badges.BadgeAnimation.rotation(
                 animationDuration: Duration(seconds: 1),
                 colorChangeAnimationDuration: Duration(seconds: 1),
                 loopAnimation: false,
                 curve: Curves.fastOutSlowIn,
                 colorChangeAnimationCurve: Curves.easeInCubic,
               ),
-              //badgeContent: Text('3'),
               child: IconButton(
                 onPressed: () {
                   Navigator.push(
@@ -63,35 +66,18 @@ class AppbarWidget extends StatelessWidget with PreferredSizeWidget {
                 },
                 icon: Icon(
                   Icons.shopping_cart_rounded,
-                  color: kIconColor,
-                  size: 25,
+                  color: AppColor.kIconColor,
+                  size: fontSize * 1.4,
                 ),
               ),
             ),
           ),
         )
-        // IconButton(
-        //   onPressed: () {
-        //     Navigator.push(
-        //       context,
-        //       MaterialPageRoute(
-        //         builder: (context) {
-        //           return CartSc();
-        //         },
-        //       ),
-        //     );
-        //   },
-        //   icon: Icon(
-        //     Icons.shopping_cart_rounded,
-        //     color: kIconColor,
-        //     size: 25,
-        //   ),
-        // ),
       ],
     );
   }
 
   @override
   // TODO: implement preferredSize
-  Size get preferredSize => Size.fromHeight(50.0);
+  Size get preferredSize => Size.fromHeight(70 / 100 * 75 );
 }

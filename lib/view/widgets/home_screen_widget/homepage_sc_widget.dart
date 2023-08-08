@@ -1,155 +1,159 @@
-
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:e_commerce_app/models/products_model.dart';
-import 'package:e_commerce_app/utils/constant_color.dart';
-import 'package:e_commerce_app/view/item_detail_order_sc.dart';
-import 'package:e_commerce_app/view/items_categories_sc.dart';
+import 'package:e_commerce_app/utils/constants/constant_color.dart';
+import 'package:e_commerce_app/view/widgets/home_screen_widget/favorite_button_widget.dart';
+import 'package:e_commerce_app/view/widgets/home_screen_widget/image_item_slider_widget.dart';
+import 'package:e_commerce_app/view_model/cart_view_model.dart';
 import 'package:e_commerce_app/view_model/product_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sizer/sizer.dart';
 
-import 'animated_search_bar_widget.dart';
+import '../../../view_model/favorite_view_model.dart';
+import '../../screens/item_detail_order_sc.dart';
 
 class HomepageScWidget extends StatelessWidget {
-  final UserViewModel userViewModel;
+  final GlobalKey<ScaffoldMessengerState>? scaffoldMessengerState;
+  final ProductViewModel? userViewModel;
 
-  const HomepageScWidget({Key? key, required this.userViewModel})
+  const HomepageScWidget({Key? key, this.userViewModel,this.scaffoldMessengerState})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    FavoriteViewModel favoriteViewModel = context.read<FavoriteViewModel>();
     return Column(
       children: [
         Expanded(
           child: GridView.builder(
+            // cacheExtent: 20,
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                mainAxisSpacing: 10.0,
-                crossAxisSpacing: 0.0,
-                childAspectRatio: 0.70),
-            itemCount: userViewModel.productModelView?.products?.length,
+              crossAxisCount: 2,
+              mainAxisSpacing: 0.5,
+              crossAxisSpacing: 0.1.h,
+              //childAspectRatio:0.64,
+              mainAxisExtent: 38.h,
+            ),
+            itemCount: userViewModel?.productModelView?.products?.length,
             itemBuilder: (context, index1) {
-              ////////////
-              Product product =
-              userViewModel.productModelView!.products![index1];
+              Product product = userViewModel!.productModelView!.products![index1];
               return GestureDetector(
-                onTap: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context){
-                    return ItemDetailOrderSc(product: product,userViewModel: userViewModel,);
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return ItemDetailOrderSc(
+                      product: product,
+                      userViewModel: userViewModel,
+                    );
                   }));
                 },
-                child: Stack(
-                  children: [
-                    ListView(
-                      physics: NeverScrollableScrollPhysics(),
-                      children: [
-                        Container(
-                          padding: EdgeInsets.all(10),
-                          width: 150.0,
-                          height: 190,
-                          child: CarouselSlider.builder(
-                            itemCount: product.images!.length > 3
-                                ? 3
-                                : product.images!.length,
-                            itemBuilder: (ctx, idx, _) => Image.network(
-                              product.images![idx],
-                              fit: BoxFit.cover,
-                              errorBuilder: (context, Object exception,
-                                  StackTrace? stackTrace) {
-                                return Image.asset(
-                                    'assets/images/no_image_available.jpg');
-                              },
+                child: Container(
+                  key: Key('det_$index1'),
+                  margin: EdgeInsets.all(0.2.h),
+                  decoration: CartViewModel().getSelectedItem() == true
+                      ? BoxDecoration(
+                          border: Border.all(color: AppColor.kMainColor),
+                          gradient: LinearGradient(colors: [
+                            AppColor.kMainColor.withOpacity(0.08),
+                            AppColor.kMainColor.withOpacity(0.1),
+                            AppColor.kMainColor.withOpacity(0.08),
+                          ]))
+                      : null,
+                  child: Stack(
+                    children: [
+                      ListView(
+                        physics: const NeverScrollableScrollPhysics(),
+                        children: [
+                          // Images Slider for each item -------------------------
+                          ImageItemSliderWidget(product: product),
+                          Padding(
+                            padding: EdgeInsets.only(
+                              left: 2.h,
+                              right: 2.h,
+                              top: 0.5.h,
+                              bottom: 3.h,
                             ),
-                            options: CarouselOptions(
-                              enableInfiniteScroll: false,
-                              //pageSnapping: false,
-                              //autoPlayInterval: Duration.zero,
-                              //animateToClosest: false,
-                              enlargeFactor: 0.2,
-                              //disableCenter: true,
-                              height: 400,
-                              autoPlay: true,
-                              enlargeCenterPage: true,
-                            ),
-                          ),
-                        ),
-
-                        Padding(
-                          padding: EdgeInsets.only(
-                              left: 15.0, right: 15.0, top: 5.0, bottom: 5.0),
-                          child: Text(
-                            product.title!.toString(),
-                            style: TextStyle(fontSize: 17, color: kDefaultTextColor),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 5.0,
-                        ),
-                      ],
-                    ),
-                    Positioned(
-                      bottom: 25,
-                      child: Padding(
-                        padding:
-                        EdgeInsets.only(left: 15.0, top: 5.0, bottom: 5.0),
-                        child: RichText(
-                          text: TextSpan(
-                            children: [
-                              TextSpan(
-                                text: '${product.price!.toString()} \$',
-                                style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.bold,
-                                    color: kDescriptionTextColor,
-                                    decoration: TextDecoration.lineThrough,
-                                    decorationColor: Colors.red,
-                                    decorationThickness: 1.5),
+                            child: Text(
+                              product.title!.toString(),
+                              style: TextStyle(
+                                fontSize: 11.sp,
+                                color: AppColor.kDefaultTextColor,
+                                fontWeight: FontWeight.bold,
                               ),
-                              TextSpan(text: '  '),
-                              TextSpan(
-                                text:
-                                '${userViewModel.calcPriceWithPercentage(product.price!, product.discountPercentage!.floor()).toString()} \$',
-                                style: TextStyle(
+                              maxLines: 2,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Positioned(
+                        top: 30.5.h,
+                        child: Padding(
+                          padding: EdgeInsets.only(
+                            left: 2.h,
+                          ),
+                          child: RichText(
+                            text: TextSpan(
+                              children: [
+                                TextSpan(
+                                  text: '${product.price!.toString()} \$',
+                                  style: TextStyle(
+                                      fontSize: 10.sp,
+                                      fontWeight: FontWeight.bold,
+                                      color: AppColor.kDescriptionTextColor,
+                                      decoration: TextDecoration.lineThrough,
+                                      decorationColor: Colors.red,
+                                      decorationThickness: 1.5),
+                                ),
+                                const TextSpan(text: '  '),
+                                TextSpan(
+                                  text:
+                                      '${userViewModel!.calcPriceWithPercentage(double.parse(product.price.toString()), product.discountPercentage!.floorToDouble()).toString()} \$',
+                                      //'${userViewModel.calcPriceWithPercentage(double.parse(product.price.toString()), product.discountPercentage!.floor()).toString()} \$',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 10.sp,
+                                      color: AppColor.kDefaultTextColor),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                        top: 33.h,
+                        right: 1.5.h,
+                        left: 1.5.h,
+                        child: Padding(
+                          padding: EdgeInsets.only(left: 0.4.h, right: 0.4.h),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Container(
+                                alignment: Alignment.center,
+                                width: 20.w,
+                                height: 2.5.h,
+                                decoration: const BoxDecoration(
+                                    color: Colors.red,
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(5.0))),
+                                child: Text(
+                                  '${product.discountPercentage!.floor().toString()} %',
+                                  style: TextStyle(
                                     fontWeight: FontWeight.bold,
-                                    fontSize: 14,
-                                    color: kDefaultTextColor),
+                                    fontSize: 10.sp,
+                                    color: AppColor.kBackgroundColor,
+                                  ),
+                                ),
+                              ),
+                              // Favorite Button of each Item --------------------
+                              FavoriteButtonWidget(
+                                itemIndex: index1,
+                                scaffoldMessengerState: favoriteViewModel.scaffoldMessengerKey,
                               ),
                             ],
                           ),
                         ),
                       ),
-                    ),
-                    Positioned(
-                      bottom: 0,
-                      right: 0,
-                      left: 0,
-                      child: Padding(
-                        padding: EdgeInsets.only(left: 15.0, right: 15.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Container(
-                              alignment: Alignment.center,
-                              width: 75,
-                              height: 18,
-                              decoration: BoxDecoration(color: Colors.red),
-                              child: Text(
-                                '${product.discountPercentage!.floor().toString()} %',
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 11,
-                                    color: kDefaultTextColor),
-                              ),
-                            ),
-                            Icon(
-                              Icons.favorite_border_rounded,
-                              color: kMainColor,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               );
             },
@@ -159,4 +163,3 @@ class HomepageScWidget extends StatelessWidget {
     );
   }
 }
-

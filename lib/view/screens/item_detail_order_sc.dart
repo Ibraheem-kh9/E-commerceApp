@@ -13,8 +13,9 @@ import 'package:flutter/services.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
-import '../models/favorite_model.dart';
-import '../utils/constant_color.dart';
+
+import '../../models/favorite_model.dart';
+import '../../utils/constants/constant_color.dart';
 
 class ItemDetailOrderSc extends StatelessWidget {
   final Product? product;
@@ -35,7 +36,7 @@ class ItemDetailOrderSc extends StatelessWidget {
           builder: (BuildContext context) {
             return AlertDialog(
               title: Text(
-                'Warning!',style: TextStyle(fontSize: 20.0,color: kMainColor,fontWeight: FontWeight.bold),
+                'Warning!',style: TextStyle(fontSize: 20.0,color: AppColor.kMainColor,fontWeight: FontWeight.bold),
                 textAlign: TextAlign.center,
               ),
               content: Text('Do you want to exit without add Item to Cart?'),
@@ -48,7 +49,7 @@ class ItemDetailOrderSc extends StatelessWidget {
                   },
                   child: Text('No'),
                   style: ButtonStyle(
-                    backgroundColor: MaterialStatePropertyAll(kMainColor.withOpacity(0.7)),
+                    backgroundColor: MaterialStatePropertyAll(AppColor.kMainColor.withOpacity(0.7)),
                     fixedSize: MaterialStatePropertyAll(Size(100.0, 20.0)),
                     shape: MaterialStatePropertyAll(
                       RoundedRectangleBorder(
@@ -67,7 +68,7 @@ class ItemDetailOrderSc extends StatelessWidget {
                   },
                   child: Text('Yes'),
                   style: ButtonStyle(
-                    backgroundColor: MaterialStatePropertyAll(kMainColor),
+                    backgroundColor: MaterialStatePropertyAll(AppColor.kMainColor),
                     fixedSize: MaterialStatePropertyAll(Size(100.0, 20.0)),
                     shape: MaterialStatePropertyAll(
                       RoundedRectangleBorder(
@@ -79,7 +80,7 @@ class ItemDetailOrderSc extends StatelessWidget {
                 ),
               ],
               shape: OutlineInputBorder(
-                  borderSide: BorderSide(color: kMainColor, width: 3.0),
+                  borderSide: BorderSide(color: AppColor.kMainColor, width: 3.0),
                   borderRadius: BorderRadius.all(Radius.circular(15.0))),
               actionsAlignment: MainAxisAlignment.spaceEvenly,
             );
@@ -95,7 +96,7 @@ class ItemDetailOrderSc extends StatelessWidget {
         // userViewModel!.setItemZero(product!.id!);
       },
       child: Scaffold(
-        backgroundColor: kBackgroundColor,
+        backgroundColor: AppColor.kBackgroundColor,
         body: SafeArea(
           child: Stack(
             children: [
@@ -127,7 +128,7 @@ class ItemDetailOrderSc extends StatelessWidget {
                 child: ItemTextWidget(
                   textName: product!.title!,
                   fontSize: 15.sp,
-                  color: kDefaultTextColor,
+                  color: AppColor.kDefaultTextColor,
                 ),
               ),
               Positioned.fill(
@@ -137,7 +138,7 @@ class ItemDetailOrderSc extends StatelessWidget {
                 child: ItemTextWidget(
                   textName: product!.description.toString(),
                   fontSize: 10.sp,
-                  color: kDescriptionTextColor,
+                  color: AppColor.kDescriptionTextColor,
                 ),
               ),
               Positioned.fill(
@@ -153,7 +154,7 @@ class ItemDetailOrderSc extends StatelessWidget {
                         style: TextStyle(
                           fontSize: 14.sp,
                           fontWeight: FontWeight.bold,
-                          color: kDefaultTextColor,
+                          color: AppColor.kDefaultTextColor,
                         ),
                       ),
                       const TextSpan(text: '  '),
@@ -200,7 +201,7 @@ class ItemDetailOrderSc extends StatelessWidget {
                       width: 3.3.h,
                       height: 3.3.h,
                       decoration: BoxDecoration(
-                          color: kMainColor,
+                          color: AppColor.kMainColor,
                           borderRadius:
                               BorderRadius.all(Radius.circular(10.w))),
                       child: RatingBar.builder(
@@ -237,7 +238,7 @@ class ItemDetailOrderSc extends StatelessWidget {
               Positioned.fill(
                 top: 64.h,
                 child: Divider(
-                  color: kMainColor,
+                  color: AppColor.kMainColor,
                   endIndent: 18.w,
                   indent: 20.w,
                   thickness: 2,
@@ -300,7 +301,7 @@ class ItemDetailOrderSc extends StatelessWidget {
 //   Widget build(BuildContext context) {
 //     var cartViewModel = context.watch<CartViewModel>();
 //     return Scaffold(
-//       backgroundColor: kBackgroundColor,
+//       backgroundColor: AppColor.kBackgroundColor,
 //       body: SafeArea(
 //         child: Stack(
 //           children: [
@@ -316,7 +317,7 @@ class ItemDetailOrderSc extends StatelessWidget {
 //               child: ItemTextWidget(
 //                 textName: product!.title!,
 //                 fontSize: 15.sp,
-//                 color: kDefaultTextColor,
+//                 color: AppColor.kDefaultTextColor,
 //               ),
 //             ),
 //             Positioned.fill(
@@ -326,7 +327,7 @@ class ItemDetailOrderSc extends StatelessWidget {
 //               child: ItemTextWidget(
 //                 textName: product!.description.toString(),
 //                 fontSize: 10.sp,
-//                 color: kDescriptionTextColor,
+//                 color: AppColor.kDescriptionTextColor,
 //               ),
 //             ),
 //             Positioned.fill(
@@ -341,7 +342,7 @@ class ItemDetailOrderSc extends StatelessWidget {
 //                       style: TextStyle(
 //                         fontSize: 14.sp,
 //                         fontWeight: FontWeight.bold,
-//                         color: kDefaultTextColor,
+//                         color: AppColor.kDefaultTextColor,
 //                       ),
 //                     ),
 //                     const TextSpan(text: '  '),
@@ -388,7 +389,7 @@ class ItemDetailOrderSc extends StatelessWidget {
 //                     width: 3.3.h,
 //                     height: 3.3.h,
 //                     decoration: BoxDecoration(
-//                         color: kMainColor,
+//                         color: AppColor.kMainColor,
 //                         borderRadius: BorderRadius.all(Radius.circular(10.w))),
 //                     child: RatingBar.builder(
 //                       itemSize: 17.sp,
@@ -438,7 +439,7 @@ class ItemDetailOrderSc extends StatelessWidget {
 //                         size: 5.h,
 //                         color: cartViewModel.itemQuantity <= 0
 //                             ? Colors.grey
-//                             : kMainColor,
+//                             : AppColor.kMainColor,
 //                       ),
 //                     ),
 //                     Align(
@@ -463,7 +464,7 @@ class ItemDetailOrderSc extends StatelessWidget {
 //                       icon: Icon(
 //                         Icons.add_circle,
 //                         size: 5.h,
-//                         color: kMainColor,
+//                         color: AppColor.kMainColor,
 //                       ),
 //                     ),
 //                   ],
@@ -473,7 +474,7 @@ class ItemDetailOrderSc extends StatelessWidget {
 //             Positioned.fill(
 //               top: 64.h,
 //               child: Divider(
-//                 color: kMainColor,
+//                 color: AppColor.kMainColor,
 //                 endIndent: 18.w,
 //                 indent: 20.w,
 //                 thickness: 2,
@@ -496,7 +497,7 @@ class ItemDetailOrderSc extends StatelessWidget {
 //                               TextSpan(
 //                                   text: 'Price : ',
 //                                   style: TextStyle(
-//                                     color: kMainColor,
+//                                     color: AppColor.kMainColor,
 //                                     fontSize: 20.sp,
 //                                     fontWeight: FontWeight.bold,
 //                                   )),
@@ -531,7 +532,7 @@ class ItemDetailOrderSc extends StatelessWidget {
 //                           },
 //                           style: ButtonStyle(
 //                             backgroundColor:
-//                             MaterialStateProperty.all(kMainColor),
+//                             MaterialStateProperty.all(AppColor.kMainColor),
 //                             shape: MaterialStateProperty.all(
 //                               RoundedRectangleBorder(
 //                                   borderRadius:
@@ -584,7 +585,7 @@ class ItemDetailOrderSc extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: kBackgroundColor,
+      backgroundColor: AppColor.kBackgroundColor,
       //backgroundColor: Color.fromRGBO(124, 165, 184, 0.65),
       body: SafeArea(
         child: ListView(

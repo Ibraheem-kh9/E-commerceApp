@@ -1,9 +1,11 @@
-class ChangeLangModel {
+class LanguageModel {
+  int? id;
   String? name;
   String? foreignName;
   bool? status;
 
-  ChangeLangModel({
+  LanguageModel({
+    this.id,
     this.name,
     this.foreignName,
     this.status,

@@ -1,9 +1,9 @@
 
-import 'package:e_commerce_app/view/setting_sc.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../view_model/product_view_model.dart';
+import '../../screens/more_bar_screens/setting_sc.dart';
 
 class SearchBarAnimationWidget extends StatefulWidget {
   const SearchBarAnimationWidget({Key? key}) : super(key: key);
@@ -16,7 +16,7 @@ class _SearchBarAnimationState extends State<SearchBarAnimationWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<UserViewModel>(builder: (context,notifyChange,child){
+    return Consumer<ProductViewModel>(builder: (context,notifyChange,child){
       return GestureDetector(
         onTap: () {
           notifyChange.setExpanded();

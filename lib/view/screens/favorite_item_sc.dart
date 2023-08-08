@@ -1,14 +1,15 @@
+import 'package:e_commerce_app/components/app_local.dart';
 import 'package:e_commerce_app/view/widgets/favorite_screen_widget/icon_button_widget.dart';
 import 'package:e_commerce_app/view/widgets/favorite_screen_widget/text_favorite_widget.dart';
 import 'package:e_commerce_app/view_model/favorite_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
-import '../models/cart_model.dart';
-import '../services/db_helper.dart';
-import '../utils/constant_color.dart';
-import '../view_model/cart_view_model.dart';
-import '../view_model/product_view_model.dart';
+import '../../models/cart_model.dart';
+import '../../services/db_helper.dart';
+import '../../utils/constants/constant_color.dart';
+import '../../view_model/cart_view_model.dart';
+import '../../view_model/product_view_model.dart';
 
 class FavoriteItemSc extends StatelessWidget {
   const FavoriteItemSc({Key? key}) : super(key: key);
@@ -16,6 +17,7 @@ class FavoriteItemSc extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     DbHelper? dbHelper = DbHelper();
+    AppLocale appLocale = AppLocale.of(context);
     final productVMdl = context.read<ProductViewModel>();
     final cartViewModel = context.read<CartViewModel>();
     return SafeArea(
@@ -31,7 +33,7 @@ class FavoriteItemSc extends StatelessWidget {
                     'assets/images/empty_list.png',
                   ),
                   Text(
-                    'No Item Favorite Found, Add Some Items',
+                    appLocale.getTranslated('favorite_no_data')!,
                     style: TextStyle(
                       fontSize: 12.sp,
                       color: Colors.grey,
@@ -44,7 +46,8 @@ class FavoriteItemSc extends StatelessWidget {
               return ListView.builder(
                 itemCount: favoriteNotify.getItemsOfFavoriteList.length,
                 itemBuilder: (context, index) {
-                  final product = productVMdl.productModelView!.products![index];
+                  final product =
+                      productVMdl.productModelView!.products![index];
                   return Container(
                     // width: 100,
                     // height: 99.0,
@@ -58,13 +61,14 @@ class FavoriteItemSc extends StatelessWidget {
                     decoration: BoxDecoration(
                       borderRadius:
                           const BorderRadius.all(Radius.circular(15.0)),
-                      color: kIconColor.withOpacity(0.2),
+                      color: AppColor.kIconColor.withOpacity(0.2),
                     ),
                     child: Row(
                       children: <Widget>[
                         Expanded(
                           child: Image.network(
-                            favoriteNotify.getItemsOfFavoriteList[index].favoriteImage!,
+                            favoriteNotify
+                                .getItemsOfFavoriteList[index].favoriteImage!,
                             height: 13.h,
                             fit: BoxFit.fill,
                           ),
@@ -77,12 +81,15 @@ class FavoriteItemSc extends StatelessWidget {
                               margin: EdgeInsets.only(left: 1.h),
                               width: 45.w,
                               child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Flexible(
                                     flex: 2,
                                     child: TextFavoriteWidget(
-                                      favoriteText: favoriteNotify.getItemsOfFavoriteList[index].favoriteItemName!,
+                                      favoriteText: favoriteNotify
+                                          .getItemsOfFavoriteList[index]
+                                          .favoriteItemName!,
                                       fontSize: 12.sp,
                                       fontWeight: FontWeight.normal,
                                       textColor: Colors.black,
@@ -95,7 +102,8 @@ class FavoriteItemSc extends StatelessWidget {
                                   ),
                                   Flexible(
                                     child: TextFavoriteWidget(
-                                      favoriteText: product.totalProductPrice.toString(),
+                                      favoriteText:
+                                          product.totalProductPrice.toString(),
                                       fontSize: 12.sp,
                                       fontWeight: FontWeight.normal,
                                       textColor: Colors.black,
@@ -118,7 +126,7 @@ class FavoriteItemSc extends StatelessWidget {
                                         '${favoriteNotify.getItemsOfFavoriteList[index].favoriteItemPrice} \$',
                                     fontSize: 9.sp,
                                     fontWeight: FontWeight.normal,
-                                    textColor: kDescriptionTextColor,
+                                    textColor: AppColor.kDescriptionTextColor,
                                     textDecoration: TextDecoration.lineThrough,
                                     decorationColor: Colors.red,
                                     decorThickness: 1.5,
@@ -132,7 +140,7 @@ class FavoriteItemSc extends StatelessWidget {
                                     //'${userNotify.calcPriceWithPercentage(userNotify.favList[index].favoriteItemPrice!, userNotify.favList[index].favoriteItemDiscount!.floor()).toString()} \$',
                                     fontSize: 10.sp,
                                     fontWeight: FontWeight.bold,
-                                    textColor: kDefaultTextColor,
+                                    textColor: AppColor.kDefaultTextColor,
                                   ),
                                 ],
                               ),
@@ -158,14 +166,25 @@ class FavoriteItemSc extends StatelessWidget {
 
                                             product.quantity <= 0
                                                 ? null
-                                                : productVMdl.decrementProductQty(favoriteNotify.getItemsOfFavoriteList[index].favoriteItemId!);
+                                                : productVMdl.decrementProductQty(
+                                                    favoriteNotify
+                                                        .getItemsOfFavoriteList[
+                                                            index]
+                                                        .favoriteItemId!);
                                             productVMdl.itemTotalPriceDecrease(
-                                              id: favoriteNotify.getItemsOfFavoriteList[index].favoriteItemId,
+                                              id: favoriteNotify
+                                                  .getItemsOfFavoriteList[index]
+                                                  .favoriteItemId,
                                               itemQty: product.quantity,
-                                              price: favoriteNotify.getItemsOfFavoriteList[index].favoriteItemPrice,
+                                              price: favoriteNotify
+                                                  .getItemsOfFavoriteList[index]
+                                                  .favoriteItemPrice,
 
                                               /// change floor to double
-                                              perc: favoriteNotify.getItemsOfFavoriteList[index].favoriteItemDiscount!.toDouble(),
+                                              perc: favoriteNotify
+                                                  .getItemsOfFavoriteList[index]
+                                                  .favoriteItemDiscount!
+                                                  .toDouble(),
                                             );
                                             //cartViewModel.removeCounter();
                                             // cartViewModel.itemTotalPriceIncrease(userViewModel
@@ -176,7 +195,7 @@ class FavoriteItemSc extends StatelessWidget {
                                           iconSize: 17.sp,
                                           color: cartViewModel.itemQuantity <= 0
                                               ? Colors.grey
-                                              : kMainColor,
+                                              : AppColor.kMainColor,
                                         ),
                                         Align(
                                           alignment: Alignment.center,
@@ -188,7 +207,11 @@ class FavoriteItemSc extends StatelessWidget {
                                               );
                                               return TextFavoriteWidget(
                                                 // favoriteText: product.quantity.toString(),
-                                                favoriteText: favoriteNotify.favList.elementAt(index).favoriteQty.toString(),
+                                                favoriteText: favoriteNotify
+                                                    .favList
+                                                    .elementAt(index)
+                                                    .favoriteQty
+                                                    .toString(),
                                                 //'${userNotify.calcPriceWithPercentage(userNotify.favList[index].favoriteItemPrice!, userNotify.favList[index].favoriteItemDiscount!.floor()).toString()} \$',
                                                 fontSize: 16.sp,
                                                 fontWeight: FontWeight.bold,
@@ -202,16 +225,27 @@ class FavoriteItemSc extends StatelessWidget {
                                             //cartViewModel.itemQtyIncrease();
 //cartViewModel.itemTotalPrice(product!.price);
 
-                                          //  productVMdl.incrementProductQty(favoriteNotify.getItemsOfFavoriteList[index].favoriteItemId!);
+                                            //  productVMdl.incrementProductQty(favoriteNotify.getItemsOfFavoriteList[index].favoriteItemId!);
 
-                                            favoriteNotify.incrementProductQty(favoriteNotify.getItemsOfFavoriteList[index].favoriteItemId!);
+                                            favoriteNotify.incrementProductQty(
+                                                favoriteNotify
+                                                    .getItemsOfFavoriteList[
+                                                        index]
+                                                    .favoriteItemId!);
                                             productVMdl.itemTotalPriceIncrease(
-                                              id: favoriteNotify.getItemsOfFavoriteList[index].favoriteItemId,
+                                              id: favoriteNotify
+                                                  .getItemsOfFavoriteList[index]
+                                                  .favoriteItemId,
                                               itemQty: product.quantity,
-                                              price: favoriteNotify.getItemsOfFavoriteList[index].favoriteItemPrice,
+                                              price: favoriteNotify
+                                                  .getItemsOfFavoriteList[index]
+                                                  .favoriteItemPrice,
 
                                               /// change floor to double
-                                              perc: favoriteNotify.getItemsOfFavoriteList[index].favoriteItemDiscount!.toDouble(),
+                                              perc: favoriteNotify
+                                                  .getItemsOfFavoriteList[index]
+                                                  .favoriteItemDiscount!
+                                                  .toDouble(),
                                               //perc: product.discountPercentage!.floor(),
                                             );
 
@@ -223,7 +257,7 @@ class FavoriteItemSc extends StatelessWidget {
                                           },
                                           icon: Icons.add_circle,
                                           iconSize: 17.sp,
-                                          color: kMainColor,
+                                          color: AppColor.kMainColor,
                                         ),
                                       ],
                                     ),
@@ -231,23 +265,35 @@ class FavoriteItemSc extends StatelessWidget {
                                   ElevatedButton(
                                     onPressed: () async {
                                       CartModel cartItem = CartModel(
-                                        itemId: favoriteNotify.getItemsOfFavoriteList[index].favoriteItemId,
-                                        itemName: favoriteNotify.getItemsOfFavoriteList[index].favoriteItemName,
-                                        itemImage: favoriteNotify.getItemsOfFavoriteList[index].favoriteImage!,
-                                        itemPrice: favoriteNotify.getItemsOfFavoriteList[index].favoriteItemPrice,
+                                        itemId: favoriteNotify
+                                            .getItemsOfFavoriteList[index]
+                                            .favoriteItemId,
+                                        itemName: favoriteNotify
+                                            .getItemsOfFavoriteList[index]
+                                            .favoriteItemName,
+                                        itemImage: favoriteNotify
+                                            .getItemsOfFavoriteList[index]
+                                            .favoriteImage!,
+                                        itemPrice: favoriteNotify
+                                            .getItemsOfFavoriteList[index]
+                                            .favoriteItemPrice,
                                         itemQty: product.quantity,
-                                        itemTotalPrices: product.totalProductPrice,
+                                        itemTotalPrices:
+                                            product.totalProductPrice,
                                       );
-                                      dbHelper.insertDb(cartItem).then((value) => print(value.id));
-                                      cartViewModel.cartSubTotalPrice(product.totalProductPrice!);
+                                      dbHelper
+                                          .insertDb(cartItem)
+                                          .then((value) => print(value.id));
+                                      cartViewModel.cartSubTotalPrice(
+                                          product.totalProductPrice!);
                                       cartViewModel.addCounter();
-                                     // cartNotify.cartSubTotalPrice(widget.product.totalProductPrice!);
-                                     // cartViewModel.addItem(cartItem);
-                                     //  cartViewModel.setIsAddedStatus(
-                                     //      true,
-                                     //      favoriteNotify
-                                     //          .getItemsOfFavoriteList[index]
-                                     //          .favoriteItemId!);
+                                      // cartNotify.cartSubTotalPrice(widget.product.totalProductPrice!);
+                                      // cartViewModel.addItem(cartItem);
+                                      //  cartViewModel.setIsAddedStatus(
+                                      //      true,
+                                      //      favoriteNotify
+                                      //          .getItemsOfFavoriteList[index]
+                                      //          .favoriteItemId!);
 
                                       ////
 
@@ -269,7 +315,7 @@ class FavoriteItemSc extends StatelessWidget {
                                         alignment: Alignment.center,
                                         backgroundColor:
                                             MaterialStatePropertyAll(
-                                                kMainColor),
+                                                AppColor.kMainColor),
                                         overlayColor: MaterialStatePropertyAll(
                                             Color(0xFF5A6EA9)),
                                         elevation:
@@ -306,7 +352,8 @@ class FavoriteItemSc extends StatelessWidget {
 // );
                             favoriteNotify.removeFavoriteItem(
                               favoriteNotify.getItemsOfFavoriteList[index],
-                              favoriteNotify.getItemsOfFavoriteList[index].favoriteItemId!,
+                              favoriteNotify.getItemsOfFavoriteList[index]
+                                  .favoriteItemId!,
                               //favoriteNotify.favList[index].favoriteItemId!,
                             );
                             productVMdl.productModelView!.products!

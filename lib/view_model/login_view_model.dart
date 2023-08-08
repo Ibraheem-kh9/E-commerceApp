@@ -1,21 +1,24 @@
-
 import 'package:e_commerce_app/models/users_model.dart';
 import 'package:e_commerce_app/services/auth_services.dart';
+import 'package:e_commerce_app/utils/constants/app_routes.dart';
 import 'package:e_commerce_app/view_model/register/mail_verification_view_model.dart';
 import 'package:firebase_auth/firebase_auth.dart' as auth;
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:lottie/lottie.dart';
+import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
 import '../myapp.dart';
 import '../utils/constants/constant_color.dart';
 import '../utils/show_snackbar.dart';
 
-class AuthenticateViewModel with ChangeNotifier {
+class LoginViewModel with ChangeNotifier {
   AuthService authService = AuthService();
-
-  final loginFormFiledKey = GlobalKey<FormState>(debugLabel: 'loginUp');
+  final emailVerify =
+      Provider.of<MailVerificationViewModel>(navigatorKey.currentContext!);
+  GlobalKey<FormState> loginFormFiledKey =
+      GlobalKey<FormState>(debugLabel: 'loginUp');
   final TextEditingController logEmailCtrl = TextEditingController();
   final TextEditingController logPasswordCtrl = TextEditingController();
   bool _passToggle = true;
@@ -36,35 +39,44 @@ class AuthenticateViewModel with ChangeNotifier {
   }
 
   Stream<UsersModel?>? get user {
-    return authService.firebase.userChanges().map(_userFromFirebase);
+    return authService.firebaseAuth.userChanges().map(_userFromFirebase);
   }
 
-  Future/*<UsersModel>*/ signInWithEmailAndPassword(UsersModel usersModel,BuildContext context) async {
-      showDialog(
-          context: context,
-          barrierDismissible: false,
-          barrierColor: Colors.transparent,
-          builder: (context) => ColorFiltered(
-            colorFilter: const ColorFilter.mode(
-              AppColor.kMainColor,
-              BlendMode.srcIn,
-            ),
-            child: Lottie.asset(
-              'assets/lottie_files/loading_icon.json',
-              width: 15.h,
-              height: 15.h,
-            ),
-          ));
-
+  Future/*<UsersModel>*/ signInWithEmailAndPassword(
+      UsersModel usersModel) async {
+    showDialog(
+        context: navigatorKey.currentContext!,
+        barrierDismissible: false,
+        barrierColor: Colors.transparent,
+        builder: (context) => ColorFiltered(
+              colorFilter: const ColorFilter.mode(
+                AppColor.kMainColor,
+                BlendMode.srcIn,
+              ),
+              child: Lottie.asset(
+                'assets/lottie_files/loading_icon.json',
+                width: 15.h,
+                height: 15.h,
+              ),
+            ));
 
     try {
-      final credential = await authService.firebase.signInWithEmailAndPassword(
+      final credential = await authService.firebaseAuth
+          .signInWithEmailAndPassword(
         email: usersModel.email!,
         password: usersModel.password!,
-      );
-      return _userFromFirebase(credential.user!)!;
+      )
+          .then((value) {
+        if (!emailVerify.isVerified) {
+          navigatorKey.currentState?.pushNamedAndRemoveUntil(
+              AppRoute.signInEmailVerified, (route) => false);
+          // navigatorKey.currentState?.pushNamedAndRemoveUntil(AppRoute.checkEmailVerifiedOrNot, (route) => false);
+        }
+        navigatorKey.currentState
+            ?.pushNamedAndRemoveUntil(AppRoute.homePage, (route) => false);
+        return _userFromFirebase(value.user!)!;
+      });
     } on auth.FirebaseAuthException catch (e) {
-      print(e);
       ShowSnackBar.shSnackBar(e.message);
     }
     navigatorKey.currentState!.popUntil((route) => route.isFirst);
@@ -72,7 +84,8 @@ class AuthenticateViewModel with ChangeNotifier {
   }
 
   Future<void> signOut() async {
-    await authService.firebase.signOut();
+    await authService.firebaseAuth.signOut();
+    navigatorKey.currentState?.popAndPushNamed(AppRoute.login);
   }
 
   //// Sign in With Google Gmail -----------------------------------------------
