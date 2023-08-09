@@ -16,4 +16,6 @@ class AppRoute {
   static const String setting = '/setting';
   static const String itemDetails = '/itemDetails';
   static const String language = '/language';
+  static const String comingSoon = '/comingSoon';
+  static const String changePassword = '/changePassword';
 }

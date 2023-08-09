@@ -12,11 +12,13 @@ import 'package:e_commerce_app/view/screens/more_bar_screens/setting_sc.dart';
 import 'package:e_commerce_app/view/screens/onboarding_sc.dart';
 import 'package:e_commerce_app/view/screens/wrapper_page_sc.dart';
 import 'package:flutter/cupertino.dart';
+import '../../view/coming_soon_sc.dart';
 import '../../view/screens/auth_screens/forgot_password/forgot_password_sc.dart';
 import '../../view/screens/auth_screens/forgot_password/reset_password_sc.dart';
 import '../../view/screens/auth_screens/register_email_verified_sc.dart';
 import '../../view/screens/auth_screens/register_page_sc.dart';
 import '../../view/screens/homepage_sc.dart';
+import '../../view/screens/more_bar_screens/update_user_password_sc.dart';
 
 Map<String, Widget Function(BuildContext)> routes = {
   AppRoute.wrapperPage: (context) => const WrapperPageSc(),
@@ -36,4 +38,6 @@ Map<String, Widget Function(BuildContext)> routes = {
   AppRoute.setting: (context) => const SettingSc(),
   AppRoute.itemDetails: (context) => const ItemDetailOrderSc(),
   AppRoute.language: (context) => const ChangeLanguageSc(),
+  AppRoute.comingSoon: (context) => const ComingSoonSc(),
+  AppRoute.changePassword: (context) => const UpdateUserPasswordSc(),
 };

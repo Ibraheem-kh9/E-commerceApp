@@ -1,14 +1,14 @@
 import 'package:e_commerce_app/components/app_local.dart';
 import 'package:e_commerce_app/utils/constants/constant_color.dart';
-import 'package:e_commerce_app/view/screens/more_bar_screens/change_language_sc.dart';
+import 'package:e_commerce_app/view/widgets/more_bar_widgets/setting_account_info_widget.dart';
+import 'package:e_commerce_app/view/widgets/more_bar_widgets/setting_card_widget.dart';
+import 'package:e_commerce_app/view/widgets/more_bar_widgets/setting_signout_btn_widget.dart';
 import 'package:e_commerce_app/view_model/login_view_model.dart';
-import 'package:e_commerce_app/view_model/setting_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
-
+import '../../../utils/constants/app_icons.dart';
 import '../../../utils/constants/app_routes.dart';
-import '../auth_screens/login_page_sc.dart';
 
 class SettingSc extends StatelessWidget {
   const SettingSc({Key? key}) : super(key: key);
@@ -16,163 +16,107 @@ class SettingSc extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final authViewModel = Provider.of<LoginViewModel>(context);
-    final settingViewModel = Provider.of<SettingViewModel>(context);
     AppLocale appLocale = AppLocale.of(context);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColor.kMainColor,
-        title: Text(appLocale.getTranslated('setting_profile')!,style: TextStyle(
-          fontSize: 17.sp,
-          color: Colors.white
-        ),),
+        title: Text(
+          appLocale.getTranslated('setting_profile')!,
+          style: TextStyle(fontSize: 17.sp, color: Colors.white),
+        ),
       ),
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.only(top: 3.h),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
+          padding: EdgeInsets.only(top: 1.4.h),
+          child: ListView(
             children: [
-              Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                // shrinkWrap: true,
-                children: [
-                  Container(
-                    alignment: Alignment.centerLeft,
-                    margin: EdgeInsets.only(left: 0.5.h,right: 0.5.h,bottom: 2.h),
-                    padding: EdgeInsets.only(left: 2.h),
-                    height: 6.h,
-                    decoration: BoxDecoration(
-                      border: Border.all(color: AppColor.kMainColor.withOpacity(0.5))
-                    ),
-                    child: Text(
-                      //settingViewModel.usersModel.name!,
-                      authViewModel.authService.firebaseAuth.currentUser!.email!,
-                      //appLocale.getTranslated('setting_notification')!,
-                      textAlign: TextAlign.left,
-                      style: TextStyle(
-                        fontSize: 13.sp,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black87,
-                      ),
-                    ),
-                  ),
-                  Card(
-                    shape: OutlineInputBorder(borderSide: BorderSide(color: AppColor.kMainColor.withOpacity(0.5))),
-                    child: TextButton(
-                      onPressed: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) {
-                          return LoginSc();
-                        }));
-                      },
-                      child: Text(
-                        appLocale.getTranslated('setting_notification')!,
-                        textAlign: TextAlign.left,
-                        style: TextStyle(
-                          fontSize: 13.sp,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black87,
-                        ),
-                      ),
-                    ),
-                  ),
-
-                  Card(
-                    shape: OutlineInputBorder(borderSide: BorderSide(color: AppColor.kMainColor.withOpacity(0.5))),
-                    child: TextButton(
-                      onPressed: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) {
-                          return LoginSc();
-                        }));
-                      },
-                      child: Text(
-                        appLocale.getTranslated('setting_my_order')!,
-                        textAlign: TextAlign.left,
-                        style: TextStyle(
-                          fontSize: 13.sp,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black87,
-                        ),
-                      ),
-                    ),
-                  ),
-
-                  Card(
-                    shape: OutlineInputBorder(borderSide: BorderSide(color: AppColor.kMainColor.withOpacity(0.5))),
-                    child: TextButton(
-                      onPressed: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) {
-                          return LoginSc();
-                        }));
-                      },
-                      child: Text(
-                        appLocale.getTranslated('setting_edit_profile')!,
-                        textAlign: TextAlign.left,
-                        style: TextStyle(
-                          fontSize: 13.sp,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black87,
-                        ),
-                      ),
-                    ),
-                  ),
-
-                  Card(
-                    shape: OutlineInputBorder(borderSide: BorderSide(color: AppColor.kMainColor.withOpacity(0.5))),
-                    child: TextButton(
-                      onPressed: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) {
-                          return LoginSc();
-                        }));
-                      },
-                      child: Text(
-                        appLocale.getTranslated('setting_change_password')!,
-                        textAlign: TextAlign.left,
-                        style: TextStyle(
-                          fontSize: 13.sp,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black87,
-                        ),
-                      ),
-                    ),
-                  ),
-
-                  Card(
-                    shape: OutlineInputBorder(borderSide: BorderSide(color: AppColor.kMainColor.withOpacity(0.5))),
-                    child: TextButton(
-                      onPressed: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) {
-                          return ChangeLanguageSc();
-                        }));
-                      },
-                      child: Text(
-                        appLocale.getTranslated('setting_language')!,
-                        textAlign: TextAlign.left,
-                        style: TextStyle(
-                          fontSize: 13.sp,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black87,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
+              SettingAccountInfoWidget(
+                imageName: AppIcons.accountIcon,
+                email:
+                    authViewModel.authService.firebaseAuth.currentUser!.email!,
+                phoneNumber: 'phone Number',
               ),
-
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: ElevatedButton(
-                  onPressed: () {
-                    authViewModel.signOut();
-                   // Navigator.pushReplacementNamed(context, AppRoute.login);
-                  },
-                  style: ButtonStyle(
-                    fixedSize: MaterialStatePropertyAll(Size(20.h, 5.h)),
-                    backgroundColor: const MaterialStatePropertyAll(AppColor.kIconColor),
-                  ),
-                  child: Text(appLocale.getTranslated('setting_sign_out')!,style: TextStyle(fontSize: 16.sp),),
-                ),
+              SettingCardWidget(
+                onPress: () {
+                  Navigator.pushNamed(context, AppRoute.comingSoon);
+                },
+                imageName: AppIcons.notificationIcon,
+                text: appLocale.getTranslated('setting_notification')!,
+              ),
+              SettingCardWidget(
+                onPress: () {
+                  Navigator.pushNamed(context, AppRoute.comingSoon);
+                },
+                imageName: AppIcons.orderIcon,
+                text: appLocale.getTranslated('setting_my_order')!,
+              ),
+              SettingCardWidget(
+                onPress: () {
+                  Navigator.pushNamed(context, AppRoute.comingSoon);
+                },
+                imageName: AppIcons.editProfileIcon,
+                text: appLocale.getTranslated('setting_edit_profile')!,
+              ),
+              SettingCardWidget(
+                onPress: () {
+                  Navigator.pushNamed(context, AppRoute.changePassword);
+                },
+                imageName: AppIcons.changePasswordIcon,
+                text: appLocale.getTranslated('setting_change_password')!,
+              ),
+              SettingCardWidget(
+                onPress: () {
+                  Navigator.pushNamed(context, AppRoute.language);
+                },
+                imageName: AppIcons.languageIcon,
+                text: appLocale.getTranslated('setting_language')!,
+              ),
+              SizedBox(
+                height: 1.2.h,
+              ),
+              ///// every thing about company Contact --------------------------
+              SettingCardWidget(
+                onPress: () {
+                  Navigator.pushNamed(context, AppRoute.comingSoon);
+                },
+                imageName: AppIcons.chatUsIcon,
+                text: appLocale.getTranslated('setting_chat_with_us')!,
+              ),
+              SettingCardWidget(
+                onPress: () {
+                  Navigator.pushNamed(context, AppRoute.comingSoon);
+                },
+                imageName: AppIcons.helpCenterIcon,
+                text: appLocale.getTranslated('setting_help_center')!,
+              ),
+              SettingCardWidget(
+                onPress: () {
+                  Navigator.pushNamed(context, AppRoute.comingSoon);
+                },
+                imageName: AppIcons.privacyCenterIcon,
+                text: appLocale.getTranslated('setting_privacy_policy')!,
+              ),
+              SettingCardWidget(
+                onPress: () {
+                  Navigator.pushNamed(context, AppRoute.comingSoon);
+                },
+                imageName: AppIcons.privacyCenterIcon,
+                text: appLocale.getTranslated('setting_privacy_policy')!,
+              ),
+              SettingCardWidget(
+                onPress: () {
+                  Navigator.pushNamed(context, AppRoute.comingSoon);
+                },
+                imageName: AppIcons.aboutUsIcon,
+                text: appLocale.getTranslated('setting_about_us')!,
+              ),
+              //// sign out button of account ----------------------------------
+              SettingSignOutBtn(
+                onPress: () {
+                  authViewModel.signOut();
+                },
+                imageName: AppIcons.logoutIcon,
+                text: appLocale.getTranslated('setting_sign_out')!,
               ),
             ],
           ),
