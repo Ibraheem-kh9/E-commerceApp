@@ -1,8 +1,10 @@
 import 'package:e_commerce_app/myapp.dart';
-import 'package:e_commerce_app/services/auth_services.dart';
+
 import 'package:flutter/material.dart';
 
-import '../../utils/constants/app_routes.dart';
+import '../../core/services/auth_services.dart';
+import '../../core/utils/constants/app_routes.dart';
+
 
 class ResetPasswordViewModel with ChangeNotifier {
   final AuthService authService = AuthService();

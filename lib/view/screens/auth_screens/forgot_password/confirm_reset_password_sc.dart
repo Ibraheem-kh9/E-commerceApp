@@ -1,4 +1,4 @@
-import 'package:e_commerce_app/utils/constants/constant_color.dart';
+
 import 'package:e_commerce_app/view/screens/auth_screens/login_page_sc.dart';
 import 'package:e_commerce_app/view/screens/auth_screens/register_page_sc.dart';
 import 'package:e_commerce_app/view/widgets/forgot_password_widgets/forgot_test_widget.dart';
@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../../components/app_local.dart';
+import '../../../../core/utils/constants/constant_color.dart';
 
 class ConfirmResetPasswordSc extends StatelessWidget {
   const ConfirmResetPasswordSc({super.key});

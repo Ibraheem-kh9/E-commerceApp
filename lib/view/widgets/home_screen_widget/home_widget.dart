@@ -1,43 +1,75 @@
+import 'package:e_commerce_app/core/utils/constants/app_routes.dart';
 import 'package:e_commerce_app/models/products_model.dart';
-import 'package:e_commerce_app/utils/constants/constant_color.dart';
 import 'package:e_commerce_app/view/widgets/home_screen_widget/favorite_button_widget.dart';
 import 'package:e_commerce_app/view/widgets/home_screen_widget/image_item_slider_widget.dart';
+import 'package:e_commerce_app/view/widgets/home_screen_widget/search_tx_widget.dart';
 import 'package:e_commerce_app/view_model/cart_view_model.dart';
 import 'package:e_commerce_app/view_model/product_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../../core/utils/constants/constant_color.dart';
 import '../../../view_model/favorite_view_model.dart';
 import '../../screens/item_detail_order_sc.dart';
 
-class HomepageScWidget extends StatelessWidget {
-  final GlobalKey<ScaffoldMessengerState>? scaffoldMessengerState;
-  final ProductViewModel? userViewModel;
+class HomeWidget extends StatelessWidget {
+ // final GlobalKey<ScaffoldMessengerState>? scaffoldMessengerState;
+ // final ProductViewModel? userViewModel;
 
-  const HomepageScWidget({Key? key, this.userViewModel,this.scaffoldMessengerState})
+  const HomeWidget(
+      {Key? key, /*this.userViewModel, this.scaffoldMessengerState*/})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    ProductViewModel userViewModel = context.watch<ProductViewModel>();
     FavoriteViewModel favoriteViewModel = context.read<FavoriteViewModel>();
-    return Column(
+    return ListView(
       children: [
-        Expanded(
+        Padding(
+          padding:
+              EdgeInsets.only(left: 1.5.h, right: 1.5.h, top: 1.h, bottom: 1.h),
+          child: Row(
+            children: [
+              //// search widget of home page ----------------------------------
+               SearchTxtWidget(),
+              SizedBox(
+                width: 0.4.h,
+              ),
+              GestureDetector(
+                onTap: () {},
+                child: Icon(
+                  Icons.notifications_outlined,
+                  size: 20.sp,
+                  color: AppColor.kIconColor,
+                ),
+              ),
+            ],
+          ),
+        ),
+        SizedBox(
+          height: 74.h,
           child: GridView.builder(
-            // cacheExtent: 20,
+            cacheExtent: 6,
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
               mainAxisSpacing: 0.5,
               crossAxisSpacing: 0.1.h,
-              //childAspectRatio:0.64,
               mainAxisExtent: 38.h,
             ),
-            itemCount: userViewModel?.productModelView?.products?.length,
+            itemCount: userViewModel.productModelView?.products?.length,
             itemBuilder: (context, index1) {
-              Product product = userViewModel!.productModelView!.products![index1];
+              Product product =
+                  userViewModel.productModelView!.products![index1];
               return GestureDetector(
                 onTap: () {
+                  // Navigator.pushNamed(context, AppRoute.itemDetailOrderSc,arguments: {
+                  //         product: product,
+                  //         userViewModel: userViewModel,
+                  //     });
+
+
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
                     return ItemDetailOrderSc(
                       product: product,
@@ -105,8 +137,8 @@ class HomepageScWidget extends StatelessWidget {
                                 const TextSpan(text: '  '),
                                 TextSpan(
                                   text:
-                                      '${userViewModel!.calcPriceWithPercentage(double.parse(product.price.toString()), product.discountPercentage!.floorToDouble()).toString()} \$',
-                                      //'${userViewModel.calcPriceWithPercentage(double.parse(product.price.toString()), product.discountPercentage!.floor()).toString()} \$',
+                                      '${userViewModel.calcPriceWithPercentage(double.parse(product.price.toString()), product.discountPercentage!.floorToDouble()).toString()} \$',
+                                  //'${userViewModel.calcPriceWithPercentage(double.parse(product.price.toString()), product.discountPercentage!.floor()).toString()} \$',
                                   style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 10.sp,
@@ -146,7 +178,8 @@ class HomepageScWidget extends StatelessWidget {
                               // Favorite Button of each Item --------------------
                               FavoriteButtonWidget(
                                 itemIndex: index1,
-                                scaffoldMessengerState: favoriteViewModel.scaffoldMessengerKey,
+                                scaffoldMessengerState:
+                                    favoriteViewModel.scaffoldMessengerKey,
                               ),
                             ],
                           ),

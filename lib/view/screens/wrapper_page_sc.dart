@@ -1,14 +1,10 @@
 import 'package:e_commerce_app/models/users_model.dart';
-import 'package:e_commerce_app/utils/constants/app_routes.dart';
-import 'package:e_commerce_app/view/screens/auth_screens/register_email_verified_sc.dart';
 import 'package:e_commerce_app/view/screens/onboarding_sc.dart';
 import 'package:e_commerce_app/view_model/login_view_model.dart';
 import 'package:e_commerce_app/view_model/register/mail_verification_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../view_model/app_language_view_model.dart';
-import 'auth_screens/login_page_sc.dart';
-import 'auth_screens/register_page_sc.dart';
 import 'homepage_sc.dart';
 
 class WrapperPageSc extends StatefulWidget {

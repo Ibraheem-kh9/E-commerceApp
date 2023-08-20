@@ -1,11 +1,12 @@
-import 'package:e_commerce_app/utils/constants/app_routes.dart';
-import 'package:e_commerce_app/utils/constants/constant_color.dart';
-import 'package:e_commerce_app/view/screens/homepage_sc.dart';
+
 import 'package:e_commerce_app/view_model/login_view_model.dart';
 import 'package:e_commerce_app/view_model/register/mail_verification_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
+
+import '../../../core/utils/constants/app_routes.dart';
+import '../../../core/utils/constants/constant_color.dart';
 
 class RegisterEmailVerifiedSc extends StatefulWidget {
   const RegisterEmailVerifiedSc({super.key});

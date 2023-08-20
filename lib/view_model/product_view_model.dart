@@ -1,11 +1,16 @@
+import 'package:e_commerce_app/core/services/auth_services.dart';
 import 'package:e_commerce_app/models/favorite_model.dart';
 import 'package:e_commerce_app/models/products_error.dart';
 import 'package:e_commerce_app/models/products_model.dart';
 import 'package:e_commerce_app/repo/api_status.dart';
-import 'package:e_commerce_app/services/product_services.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import '../core/services/product_services.dart';
+import '../view/screens/favorite_item_sc.dart';
+import '../view/screens/categories_sc.dart';
+import '../view/screens/more_bar_screens/setting_sc.dart';
+import '../view/widgets/home_screen_widget/home_widget.dart';
 
 class ProductViewModel with ChangeNotifier {
   bool _loading = false;
@@ -13,6 +18,7 @@ class ProductViewModel with ChangeNotifier {
   UserError _userError = UserError();
   int currentIndexBar = 0;
   bool isExpanded = false;
+
 
   /// change int to double and add final
   final double _cartPrice = 0.0;
@@ -26,6 +32,33 @@ class ProductViewModel with ChangeNotifier {
 
   ProductViewModel() {
     getProducts();
+    firebaseCall();
+  }
+  List<Widget> screensView = [
+    HomeWidget(),
+    FavoriteItemSc(),
+    CategoriesSc(),
+    SettingSc(),
+  ];
+
+  List<String> titleBottomAppBar = [
+    'Home',
+    'Favorite',
+    'Category',
+    'More',
+  ];
+  List<IconData> iconBottomAppBar = [
+    Icons.home_outlined,
+    Icons.favorite_border,
+    Icons.category_outlined,
+    Icons.more_horiz,
+  ];
+
+  firebaseCall(){
+     FirebaseMessaging.instance.getToken().then((value) {
+      print ('the token of firebase Messaging is $value');
+      String? token = value;
+    });
   }
   setFavoriteCheck(int index) {
     _productModelView!.products![index].isFavorite =
@@ -50,6 +83,7 @@ class ProductViewModel with ChangeNotifier {
   }
   setProductModelList(ProductModel productModelList) {
     _productModelView = productModelList;
+
   }
   // setProductModelList(ProductModel productModelList) {
   //   _productModelView = productModelList;
@@ -62,9 +96,8 @@ class ProductViewModel with ChangeNotifier {
 
 
   getProducts() async {
-
     setLoading(true);
-    var response = await UsersServices().getProducts();
+    var response = await ProductsServices().fetchProducts();
     print(response);
     if (response is Success) {
       setProductModelList(response.response as ProductModel);
@@ -132,7 +165,7 @@ class ProductViewModel with ChangeNotifier {
   }
 
   selectedScreenBar(int idx) {
-    idx = currentIndexBar;
+    currentIndexBar = idx;
     notifyListeners();
   }
 

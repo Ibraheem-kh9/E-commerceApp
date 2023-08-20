@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
-import '../../../utils/constants/constant_color.dart';
+import '../../../core/utils/constants/constant_color.dart';
+
 
 class SettingSignOutBtn extends StatelessWidget {
   final Function()? onPress;

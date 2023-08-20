@@ -1,7 +1,5 @@
 import 'package:e_commerce_app/components/app_local.dart';
-import 'package:e_commerce_app/utils/constants/app_routes.dart';
-import 'package:e_commerce_app/utils/constants/constant_color.dart';
-import 'package:e_commerce_app/view/screens/auth_screens/forgot_password/otp_code_sc.dart';
+import 'package:e_commerce_app/core/utils/constants/constant_color.dart';
 import 'package:e_commerce_app/view/widgets/forgot_password_widgets/forgot_appbar.dart';
 import 'package:e_commerce_app/view/widgets/forgot_password_widgets/forgot_test_widget.dart';
 import 'package:e_commerce_app/view/widgets/login_screen_widget/login_textform_field_widget.dart';

@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-import '../../utils/constants/constant_color.dart';
+import '../../core/utils/constants/constant_color.dart';
 import 'homepage_sc.dart';
 
 class SplashPageSc extends StatefulWidget {

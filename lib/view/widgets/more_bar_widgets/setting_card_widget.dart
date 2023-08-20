@@ -1,9 +1,10 @@
-import 'package:e_commerce_app/view/coming_soon_sc.dart';
+
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
-import '../../../utils/constants/app_icons.dart';
-import '../../../utils/constants/constant_color.dart';
+import '../../../core/utils/constants/constant_color.dart';
+
+
 
 class SettingCardWidget extends StatelessWidget {
   final Function()? onPress;

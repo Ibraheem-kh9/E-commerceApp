@@ -5,9 +5,9 @@ import 'package:e_commerce_app/view_model/favorite_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
+import '../../core/services/db_helper.dart';
+import '../../core/utils/constants/constant_color.dart';
 import '../../models/cart_model.dart';
-import '../../services/db_helper.dart';
-import '../../utils/constants/constant_color.dart';
 import '../../view_model/cart_view_model.dart';
 import '../../view_model/product_view_model.dart';
 

@@ -1,11 +1,10 @@
 import 'package:e_commerce_app/components/app_local.dart';
-import 'package:e_commerce_app/utils/constants/constant_color.dart';
-import 'package:e_commerce_app/utils/static_language.dart';
 import 'package:e_commerce_app/view_model/app_language_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
+import '../../../core/utils/constants/constant_color.dart';
+import '../../../core/utils/static_language.dart';
 
 class ChangeLanguageSc extends StatelessWidget {
   const ChangeLanguageSc({super.key});

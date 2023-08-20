@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
-import '../../../utils/constants/constant_color.dart';
+
+import '../../../core/utils/constants/constant_color.dart';
 
 class SettingAccountInfoWidget extends StatelessWidget {
   final String? imageName;

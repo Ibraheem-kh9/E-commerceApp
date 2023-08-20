@@ -1,5 +1,5 @@
 import 'package:e_commerce_app/models/products_model.dart';
-import 'package:e_commerce_app/view/widgets/home_screen_widget/homepage_sc_widget.dart';
+import 'package:e_commerce_app/view/widgets/home_screen_widget/home_widget.dart';
 import 'package:e_commerce_app/view/widgets/item_order_widget/image_order_slider_widget.dart';
 import 'package:e_commerce_app/view/widgets/item_order_widget/item_order_addtocart_button_widget.dart';
 import 'package:e_commerce_app/view/widgets/item_order_widget/item_order_qty_widget.dart';
@@ -14,8 +14,9 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../core/utils/constants/constant_color.dart';
 import '../../models/favorite_model.dart';
-import '../../utils/constants/constant_color.dart';
+
 
 class ItemDetailOrderSc extends StatelessWidget {
   final Product? product;

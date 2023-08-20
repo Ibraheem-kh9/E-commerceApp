@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 import 'package:sizer/sizer.dart';
 import '../../../../components/app_local.dart';
-import '../../../../utils/constants/constant_color.dart';
+import '../../../../core/utils/constants/constant_color.dart';
 import '../../../widgets/forgot_password_widgets/forgot_appbar.dart';
 import '../../../widgets/forgot_password_widgets/forgot_test_widget.dart';
 import '../../../widgets/login_screen_widget/login_button_widget.dart';

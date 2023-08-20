@@ -1,11 +1,11 @@
 import 'package:e_commerce_app/components/app_local.dart';
 import 'package:e_commerce_app/models/cart_model.dart';
-import 'package:e_commerce_app/services/db_helper.dart';
-import 'package:e_commerce_app/utils/constants/constant_color.dart';
-import 'package:e_commerce_app/view/appbar_widget.dart';
 import 'package:e_commerce_app/view_model/cart_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import '../../core/services/db_helper.dart';
+import '../../core/utils/constants/constant_color.dart';
 
 class CartSc extends StatelessWidget {
   const CartSc({Key? key}) : super(key: key);

@@ -2,16 +2,17 @@ import 'package:e_commerce_app/models/products_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../core/utils/constants/constant_color.dart';
 import '../../../models/favorite_model.dart';
-import '../../../utils/constants/constant_color.dart';
 import '../../../view_model/favorite_view_model.dart';
 import '../../../view_model/product_view_model.dart';
 
 class FavoriteButtonWidget extends StatelessWidget {
-  GlobalKey<ScaffoldMessengerState>? scaffoldMessengerState;
+  /// add final after update
+  final GlobalKey<ScaffoldMessengerState>? scaffoldMessengerState;
   final int itemIndex;
 
-  FavoriteButtonWidget(
+  const FavoriteButtonWidget(
       {Key? key, required this.itemIndex, this.scaffoldMessengerState})
       : super(key: key);
 

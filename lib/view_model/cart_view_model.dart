@@ -1,10 +1,11 @@
-import 'dart:convert';
+
 
 import 'package:e_commerce_app/models/favorite_model.dart';
-import 'package:e_commerce_app/services/db_helper.dart';
+
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../core/services/db_helper.dart';
 import '../models/cart_model.dart';
 
 class CartViewModel with ChangeNotifier {

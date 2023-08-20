@@ -1,6 +1,4 @@
 import 'package:e_commerce_app/models/users_model.dart';
-import 'package:e_commerce_app/services/auth_services.dart';
-import 'package:e_commerce_app/utils/constants/app_routes.dart';
 import 'package:e_commerce_app/view_model/register/mail_verification_view_model.dart';
 import 'package:firebase_auth/firebase_auth.dart' as auth;
 import 'package:flutter/material.dart';
@@ -9,9 +7,11 @@ import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
+import '../core/services/auth_services.dart';
+import '../core/utils/constants/app_routes.dart';
+import '../core/utils/constants/constant_color.dart';
+import '../core/utils/show_snackbar.dart';
 import '../myapp.dart';
-import '../utils/constants/constant_color.dart';
-import '../utils/show_snackbar.dart';
 
 class LoginViewModel with ChangeNotifier {
   AuthService authService = AuthService();

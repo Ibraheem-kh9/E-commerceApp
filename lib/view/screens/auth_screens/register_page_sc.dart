@@ -1,12 +1,13 @@
 import 'package:e_commerce_app/models/users_model.dart';
-import 'package:e_commerce_app/utils/constants/app_routes.dart';
-import 'package:e_commerce_app/utils/constants/constant_color.dart';
 import 'package:e_commerce_app/view/widgets/login_screen_widget/login_button_widget.dart';
 import 'package:e_commerce_app/view/widgets/login_screen_widget/login_textform_field_widget.dart';
 import 'package:e_commerce_app/view_model/register/register_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
+
+import '../../../core/utils/constants/app_routes.dart';
+import '../../../core/utils/constants/constant_color.dart';
 
 class RegisterPageSc extends StatelessWidget {
   const RegisterPageSc({Key? key}) : super(key: key);

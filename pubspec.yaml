@@ -14,12 +14,15 @@ dependencies:
 
   cupertino_icons: ^1.0.2
   provider: ^6.0.5
+  ### we don't use last version of collection because flutter test depend on this version
+  collection: ^1.17.1
   http: ^1.1.0
   connectivity_plus: ^4.0.2
   connectivity: ^3.0.6
   carousel_slider: ^4.2.1
   flutter_rating_bar: ^4.0.1
   shared_preferences: ^2.1.0
+  cached_network_image: ^3.2.3
   badges: ^3.1.1
   sqflite: ^2.2.8+1
   path_provider: ^2.0.14
@@ -28,6 +31,7 @@ dependencies:
   firebase_auth: ^4.7.2
   firebase_core: ^2.15.0
   cloud_firestore: ^4.8.0
+  firebase_messaging: ^14.6.5
   flutter_otp_text_field: ^1.1.1
   lottie: ^2.4.0
   device_preview: ^1.1.0

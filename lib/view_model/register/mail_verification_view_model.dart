@@ -1,13 +1,9 @@
 import 'dart:async';
-
-import 'package:e_commerce_app/myapp.dart';
-import 'package:e_commerce_app/services/auth_services.dart';
-import 'package:e_commerce_app/utils/constants/app_routes.dart';
-import 'package:e_commerce_app/utils/show_snackbar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 
-import '../../utils/constants/app_routes.dart';
+import '../../core/services/auth_services.dart';
+import '../../core/utils/show_snackbar.dart';
+
 
 class MailVerificationViewModel with ChangeNotifier {
   final authService = AuthService();

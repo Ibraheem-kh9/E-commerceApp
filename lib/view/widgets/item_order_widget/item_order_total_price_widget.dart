@@ -2,9 +2,7 @@ import 'package:e_commerce_app/models/products_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
-
-import '../../../utils/constants/constant_color.dart';
-import '../../../view_model/cart_view_model.dart';
+import '../../../core/utils/constants/constant_color.dart';
 import '../../../view_model/product_view_model.dart';
 
 class ItemOrderTotalPriceWidget extends StatelessWidget {

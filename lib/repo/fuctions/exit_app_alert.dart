@@ -1,9 +1,11 @@
 import 'dart:io';
 
 import 'package:e_commerce_app/components/app_local.dart';
-import 'package:e_commerce_app/utils/constants/constant_color.dart';
+
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
+
+import '../../core/utils/constants/constant_color.dart';
 
 Future<bool> exitAppAlert(BuildContext context) {
   AppLocale languageTran = AppLocale.of(context);

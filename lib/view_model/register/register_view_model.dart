@@ -1,15 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:e_commerce_app/utils/constants/app_routes.dart';
-import 'package:e_commerce_app/utils/show_snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart' as auth;
 import 'package:lottie/lottie.dart';
 import 'package:sizer/sizer.dart';
+import '../../core/services/auth_services.dart';
+import '../../core/utils/constants/app_routes.dart';
+import '../../core/utils/constants/constant_color.dart';
+import '../../core/utils/show_snackbar.dart';
 import '../../models/users_model.dart';
 import '../../myapp.dart';
-import '../../services/auth_services.dart';
-import '../../utils/constants/app_routes.dart';
-import '../../utils/constants/constant_color.dart';
+
 
 abstract class RegisterViewModel with ChangeNotifier {
   GlobalKey<FormState> registerFormFiledKey =

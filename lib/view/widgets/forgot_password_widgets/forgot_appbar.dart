@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
-import '../../../utils/constants/constant_color.dart';
+import '../../../core/utils/constants/constant_color.dart';
 import '../../../view_model/register/reset_password_view_model.dart';
 
 class ForgotAppBarWidget extends StatelessWidget implements PreferredSizeWidget{

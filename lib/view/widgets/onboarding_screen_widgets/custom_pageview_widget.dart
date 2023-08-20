@@ -3,7 +3,7 @@ import 'package:e_commerce_app/view_model/onboarding_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
-import '../../../utils/static_onboard.dart';
+import '../../../core/utils/static_onboard.dart';
 
 class CustomPageViewWidget extends StatelessWidget {
   final OnBoardingViewModel onBoardingViewModel;

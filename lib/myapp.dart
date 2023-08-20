@@ -1,17 +1,8 @@
 import 'package:device_preview/device_preview.dart';
 import 'package:e_commerce_app/components/app_local.dart';
 import 'package:e_commerce_app/repo/connectivity_status.dart';
-import 'package:e_commerce_app/services/connectiviy_service.dart';
-import 'package:e_commerce_app/utils/app_theme.dart';
-import 'package:e_commerce_app/utils/constants/app_routes.dart';
-import 'package:e_commerce_app/utils/constants/constant_color.dart';
-import 'package:e_commerce_app/utils/routes/routes.dart';
-import 'package:e_commerce_app/utils/show_snackbar.dart';
-import 'package:e_commerce_app/view/screens/auth_screens/login_page_sc.dart';
-import 'package:e_commerce_app/view/screens/more_bar_screens/change_language_sc.dart';
-import 'package:e_commerce_app/view/screens/onboarding_sc.dart';
-import 'package:e_commerce_app/view/screens/wrapper_page_sc.dart';
 import 'package:e_commerce_app/view_model/app_language_view_model.dart';
+import 'package:e_commerce_app/view_model/item_category_view_model.dart';
 import 'package:e_commerce_app/view_model/register/mail_verification_view_model.dart';
 import 'package:e_commerce_app/view_model/register/register_view_model.dart';
 import 'package:e_commerce_app/view_model/login_view_model.dart';
@@ -27,6 +18,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
+import 'core/services/connectiviy_service.dart';
+import 'core/utils/app_theme.dart';
+import 'core/utils/constants/app_routes.dart';
+import 'core/utils/routes/routes.dart';
+import 'core/utils/show_snackbar.dart';
 
 
  final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
@@ -47,6 +43,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => ProductViewModel()),
         ChangeNotifierProvider(create: (_) => FavoriteViewModel()),
         ChangeNotifierProvider(create: (_) => CategoryViewModel()),
+        ChangeNotifierProvider(create: (_) => ItemCategoryViewModel()),
         ChangeNotifierProvider(create: (_) => CartViewModel()),
         ChangeNotifierProvider(create: (_) => ItemDetailViewModel()),
         ChangeNotifierProvider(create: (_) => SettingViewModel()),

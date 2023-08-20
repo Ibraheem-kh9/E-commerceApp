@@ -1,21 +1,15 @@
+import 'package:e_commerce_app/core/utils/constants/app_routes.dart';
 import 'package:e_commerce_app/repo/connectivity_status.dart';
-import 'package:e_commerce_app/utils/constants/constant_color.dart';
-
 import 'package:e_commerce_app/view/appbar_widget.dart';
-import 'package:e_commerce_app/view/screens/auth_screens/register_email_verified_sc.dart';
-import 'package:e_commerce_app/view/screens/cart_sc.dart';
-import 'package:e_commerce_app/view/screens/more_bar_screens/setting_sc.dart';
-import 'package:e_commerce_app/view/widgets/home_screen_widget/home_bottom_bar.dart';
-import 'package:e_commerce_app/view/widgets/home_screen_widget/homepage_sc_widget.dart';
+import 'package:e_commerce_app/view/widgets/home_screen_widget/badges_cart_widget.dart';
+import 'package:e_commerce_app/view/widgets/home_screen_widget/bottom_navigator_app_bar/home_bottom_bar.dart';
 import 'package:e_commerce_app/view_model/favorite_view_model.dart';
 import 'package:e_commerce_app/view_model/product_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
+import '../../core/utils/constants/constant_color.dart';
 import '../../repo/fuctions/exit_app_alert.dart';
-import '../../view_model/register/mail_verification_view_model.dart';
-import 'favorite_item_sc.dart';
-import 'items_categories_sc.dart';
 import 'package:lottie/lottie.dart';
 
 class HomepageSc extends StatelessWidget {
@@ -24,28 +18,17 @@ class HomepageSc extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ProductViewModel userViewModel = context.watch<ProductViewModel>();
+    ProductViewModel productViewModel = context.watch<ProductViewModel>();
     FavoriteViewModel favoriteViewModel = context.read<FavoriteViewModel>();
-    MailVerificationViewModel emailVerifyViewModel = context.read<MailVerificationViewModel>();
-    List<Widget> allScreensView = [
-      HomepageScWidget(
-          userViewModel: userViewModel,
-          scaffoldMessengerState: favoriteViewModel.scaffoldMessengerKey),
-      FavoriteItemSc(),
-      CartSc(),
-      ItemsCategoriesSc(),
-      SettingSc(),
-    ] ;
-    Widget defaultValue = allScreensView[0];
-    List<Widget> widgetsScreen = List.filled(allScreensView.length, defaultValue);
+
     return Scaffold(
       key: favoriteViewModel.scaffoldMessengerKey,
       backgroundColor: AppColor.kBackgroundColor,
-      appBar: userViewModel.currentIndexBar == 0 ||
-              userViewModel.currentIndexBar == 1 ||
-              userViewModel.currentIndexBar == 2
+      appBar: productViewModel.currentIndexBar == 0 ||
+              productViewModel.currentIndexBar == 1 ||
+              productViewModel.currentIndexBar == 2
           ? AppbarWidget(
-              userViewModel: userViewModel,
+              userViewModel: productViewModel,
               appbarTitle: 'H-Store',
             )
           : null,
@@ -55,8 +38,9 @@ class HomepageSc extends StatelessWidget {
             builder: (context, notify, child) {
               if (notify == ConnectivityStatus.wiFi ||
                   notify == ConnectivityStatus.cellular) {
-                if (userViewModel.loading == true) {
+                if (productViewModel.loading == true) {
                   return Center(
+                    /// TODO: Handling status with Request file ----------------
                     child: ColorFiltered(
                       colorFilter: const ColorFilter.mode(
                         AppColor.kMainColor,
@@ -72,17 +56,17 @@ class HomepageSc extends StatelessWidget {
                 }
 
                 /// TODO: recoding when no internet and connect should be reload items
-                if (userViewModel.userError.code != null) {
-                  //userViewModel.refreshPage();
+                if (productViewModel.userError.code != null) {
+                  //productViewModel.refreshPage();
                   return const Text('Error in loading data');
                 }
                 return Padding(
                   padding: EdgeInsets.only(bottom: 10.0),
-                  //child: allScreensView.elementAt(userViewModel.currentIndexBar),
+                  //child: allScreensView.elementAt(productViewModel.currentIndexBar),
                   child: PageView(
                     controller: _pageController,
                     children: [
-                      allScreensView.elementAt(userViewModel.currentIndexBar),
+                      productViewModel.screensView.elementAt(productViewModel.currentIndexBar),
                     ],
                   ),
                 );
@@ -99,9 +83,15 @@ class HomepageSc extends StatelessWidget {
         ),
         onWillPop: () => exitAppAlert(context),
       ),
-      bottomNavigationBar: HomeBottomBarWidget(
-        userViewModel: userViewModel,
+      bottomNavigationBar: const HomeBottomBarWidget(),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.pushNamed(context, AppRoute.cart);
+        },
+        backgroundColor: AppColor.kIconColor,
+        child: BadgesCartWidget(),
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 }

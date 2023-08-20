@@ -14,4 +14,6 @@ class AppIcons{
   static const logoutIcon = 'assets/images/icons/logout.png';
   static const successIcon = 'assets/images/icons/success.png';
   static const failedIcon = 'assets/images/icons/failed.png';
+  static const offlineIcon = 'assets/images/icons/status_connection/offline.png';
+  static const serverFailureIcon = 'assets/images/icons/status_connection/server_failure.png';
 }

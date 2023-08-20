@@ -1,11 +1,14 @@
-import 'package:e_commerce_app/utils/constants/app_icons.dart';
+
 import 'package:e_commerce_app/view/widgets/more_bar_widgets/setting_update_psd_widget.dart';
 import 'package:e_commerce_app/view_model/setting_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
-import '../../../utils/constants/constant_color.dart';
+import '../../../core/utils/constants/app_icons.dart';
+import '../../../core/utils/constants/constant_color.dart';
+
+
 
 class UpdateUserPasswordSc extends StatelessWidget {
   const UpdateUserPasswordSc({super.key});
