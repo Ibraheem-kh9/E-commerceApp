@@ -32,7 +32,7 @@ class ProductViewModel with ChangeNotifier {
 
   ProductViewModel() {
     getProducts();
-    firebaseCall();
+  //  firebaseCall();
   }
   List<Widget> screensView = [
     HomeWidget(),
@@ -54,12 +54,12 @@ class ProductViewModel with ChangeNotifier {
     Icons.more_horiz,
   ];
 
-  firebaseCall(){
-     FirebaseMessaging.instance.getToken().then((value) {
-      print ('the token of firebase Messaging is $value');
-      String? token = value;
-    });
-  }
+  // firebaseCall(){
+  //    FirebaseMessaging.instance.getToken().then((value) {
+  //     print ('the token of firebase Messaging is $value');
+  //     String? token = value;
+  //   });
+  // }
   setFavoriteCheck(int index) {
     _productModelView!.products![index].isFavorite =
     !_productModelView!.products![index].isFavorite!;

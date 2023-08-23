@@ -10,6 +10,7 @@ class HomeBottomBarWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final productViewModel = Provider.of<ProductViewModel>(context);
     return BottomAppBar(
+      elevation: 0,
       color: Colors.white.withOpacity(0.8),
       shape: const CircularNotchedRectangle(),
       notchMargin: 10,

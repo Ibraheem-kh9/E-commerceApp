@@ -1,6 +1,6 @@
 import 'package:e_commerce_app/core/utils/constants/app_routes.dart';
 import 'package:e_commerce_app/repo/connectivity_status.dart';
-import 'package:e_commerce_app/view/appbar_widget.dart';
+import 'package:e_commerce_app/view/main_appbar_widget.dart';
 import 'package:e_commerce_app/view/widgets/home_screen_widget/badges_cart_widget.dart';
 import 'package:e_commerce_app/view/widgets/home_screen_widget/bottom_navigator_app_bar/home_bottom_bar.dart';
 import 'package:e_commerce_app/view_model/favorite_view_model.dart';
@@ -26,12 +26,20 @@ class HomepageSc extends StatelessWidget {
       backgroundColor: AppColor.kBackgroundColor,
       appBar: productViewModel.currentIndexBar == 0 ||
               productViewModel.currentIndexBar == 1 ||
-              productViewModel.currentIndexBar == 2
-          ? AppbarWidget(
+              productViewModel.currentIndexBar == 2 ||
+              productViewModel.currentIndexBar == 3
+          ? MainAppbarWidget(
               userViewModel: productViewModel,
-              appbarTitle: 'H-Store',
+              appbarTitle: productViewModel.currentIndexBar == 0
+                  ? 'TasawQ'
+                  : productViewModel.currentIndexBar == 1
+                      ? 'Favorite'
+                      : productViewModel.currentIndexBar == 2
+                          ? 'Categories'
+                          : 'TasawQ',
             )
           : null,
+      resizeToAvoidBottomInset: true,
       body: WillPopScope(
         child: SafeArea(
           child: Consumer<ConnectivityStatus>(
@@ -66,7 +74,8 @@ class HomepageSc extends StatelessWidget {
                   child: PageView(
                     controller: _pageController,
                     children: [
-                      productViewModel.screensView.elementAt(productViewModel.currentIndexBar),
+                      productViewModel.screensView
+                          .elementAt(productViewModel.currentIndexBar),
                     ],
                   ),
                 );

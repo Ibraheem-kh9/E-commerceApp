@@ -21,13 +21,6 @@ class SettingSc extends StatelessWidget {
     final authViewModel = Provider.of<LoginViewModel>(context);
     AppLocale appLocale = AppLocale.of(context);
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: AppColor.kMainColor,
-        title: Text(
-          appLocale.getTranslated('setting_profile')!,
-          style: TextStyle(fontSize: 17.sp, color: Colors.white),
-        ),
-      ),
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.only(top: 1.4.h),

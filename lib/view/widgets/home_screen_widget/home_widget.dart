@@ -1,25 +1,21 @@
-import 'package:e_commerce_app/core/utils/constants/app_routes.dart';
 import 'package:e_commerce_app/models/products_model.dart';
+import 'package:e_commerce_app/view/widgets/home_screen_widget/custom_card_disc_perc_widget.dart';
+import 'package:e_commerce_app/view/widgets/home_screen_widget/custom_card_price_widget.dart';
+import 'package:e_commerce_app/view/widgets/home_screen_widget/custom_card_title_widget.dart';
+import 'package:e_commerce_app/view/widgets/home_screen_widget/custom_home_notification_widet.dart';
 import 'package:e_commerce_app/view/widgets/home_screen_widget/favorite_button_widget.dart';
 import 'package:e_commerce_app/view/widgets/home_screen_widget/image_item_slider_widget.dart';
 import 'package:e_commerce_app/view/widgets/home_screen_widget/search_tx_widget.dart';
-import 'package:e_commerce_app/view_model/cart_view_model.dart';
 import 'package:e_commerce_app/view_model/product_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
-
 import '../../../core/utils/constants/constant_color.dart';
 import '../../../view_model/favorite_view_model.dart';
 import '../../screens/item_detail_order_sc.dart';
 
 class HomeWidget extends StatelessWidget {
- // final GlobalKey<ScaffoldMessengerState>? scaffoldMessengerState;
- // final ProductViewModel? userViewModel;
-
-  const HomeWidget(
-      {Key? key, /*this.userViewModel, this.scaffoldMessengerState*/})
-      : super(key: key);
+  const HomeWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -30,32 +26,25 @@ class HomeWidget extends StatelessWidget {
         Padding(
           padding:
               EdgeInsets.only(left: 1.5.h, right: 1.5.h, top: 1.h, bottom: 1.h),
-          child: Row(
+          child: const Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               //// search widget of home page ----------------------------------
-               SearchTxtWidget(),
-              SizedBox(
-                width: 0.4.h,
-              ),
-              GestureDetector(
-                onTap: () {},
-                child: Icon(
-                  Icons.notifications_outlined,
-                  size: 20.sp,
-                  color: AppColor.kIconColor,
-                ),
-              ),
+              SearchTxtWidget(),
+
+              CustomHomeNotificationWidget(),
             ],
           ),
         ),
-        SizedBox(
-          height: 74.h,
+        Container(
+          padding: EdgeInsets.only(left: 2.h, right: 2.h),
+          height: 80.h,
           child: GridView.builder(
             cacheExtent: 6,
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
-              mainAxisSpacing: 0.5,
-              crossAxisSpacing: 0.1.h,
+              mainAxisSpacing: 1.h,
+              crossAxisSpacing: 1.h,
               mainAxisExtent: 38.h,
             ),
             itemCount: userViewModel.productModelView?.products?.length,
@@ -69,7 +58,6 @@ class HomeWidget extends StatelessWidget {
                   //         userViewModel: userViewModel,
                   //     });
 
-
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
                     return ItemDetailOrderSc(
                       product: product,
@@ -79,16 +67,10 @@ class HomeWidget extends StatelessWidget {
                 },
                 child: Container(
                   key: Key('det_$index1'),
-                  margin: EdgeInsets.all(0.2.h),
-                  decoration: CartViewModel().getSelectedItem() == true
-                      ? BoxDecoration(
-                          border: Border.all(color: AppColor.kMainColor),
-                          gradient: LinearGradient(colors: [
-                            AppColor.kMainColor.withOpacity(0.08),
-                            AppColor.kMainColor.withOpacity(0.1),
-                            AppColor.kMainColor.withOpacity(0.08),
-                          ]))
-                      : null,
+                  decoration: BoxDecoration(
+                    color: AppColor.backgroundPageViewColor,
+                    borderRadius: BorderRadius.all(Radius.circular(2.h)),
+                  ),
                   child: Stack(
                     children: [
                       ListView(
@@ -96,58 +78,16 @@ class HomeWidget extends StatelessWidget {
                         children: [
                           // Images Slider for each item -------------------------
                           ImageItemSliderWidget(product: product),
-                          Padding(
-                            padding: EdgeInsets.only(
-                              left: 2.h,
-                              right: 2.h,
-                              top: 0.5.h,
-                              bottom: 3.h,
-                            ),
-                            child: Text(
-                              product.title!.toString(),
-                              style: TextStyle(
-                                fontSize: 11.sp,
-                                color: AppColor.kDefaultTextColor,
-                                fontWeight: FontWeight.bold,
-                              ),
-                              maxLines: 2,
-                            ),
+                          CustomCardTitleWidget(
+                            title: product.title!.toString(),
                           ),
                         ],
                       ),
-                      Positioned(
-                        top: 30.5.h,
-                        child: Padding(
-                          padding: EdgeInsets.only(
-                            left: 2.h,
-                          ),
-                          child: RichText(
-                            text: TextSpan(
-                              children: [
-                                TextSpan(
-                                  text: '${product.price!.toString()} \$',
-                                  style: TextStyle(
-                                      fontSize: 10.sp,
-                                      fontWeight: FontWeight.bold,
-                                      color: AppColor.kDescriptionTextColor,
-                                      decoration: TextDecoration.lineThrough,
-                                      decorationColor: Colors.red,
-                                      decorationThickness: 1.5),
-                                ),
-                                const TextSpan(text: '  '),
-                                TextSpan(
-                                  text:
-                                      '${userViewModel.calcPriceWithPercentage(double.parse(product.price.toString()), product.discountPercentage!.floorToDouble()).toString()} \$',
-                                  //'${userViewModel.calcPriceWithPercentage(double.parse(product.price.toString()), product.discountPercentage!.floor()).toString()} \$',
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 10.sp,
-                                      color: AppColor.kDefaultTextColor),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
+                      CustomCardPriceWidget(
+                        price: product.price!,
+                        priceAfterDisc: userViewModel.calcPriceWithPercentage(
+                            double.parse(product.price.toString()),
+                            product.discountPercentage!.floorToDouble()),
                       ),
                       Positioned(
                         top: 33.h,
@@ -158,23 +98,9 @@ class HomeWidget extends StatelessWidget {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Container(
-                                alignment: Alignment.center,
-                                width: 20.w,
-                                height: 2.5.h,
-                                decoration: const BoxDecoration(
-                                    color: Colors.red,
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(5.0))),
-                                child: Text(
-                                  '${product.discountPercentage!.floor().toString()} %',
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 10.sp,
-                                    color: AppColor.kBackgroundColor,
-                                  ),
-                                ),
-                              ),
+                              CustomCardDiscPercWidget(
+                                  percentage:
+                                      product.discountPercentage!.floor()),
                               // Favorite Button of each Item --------------------
                               FavoriteButtonWidget(
                                 itemIndex: index1,

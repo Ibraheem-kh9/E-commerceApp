@@ -2,7 +2,6 @@ import 'package:e_commerce_app/models/category_model.dart';
 import 'package:e_commerce_app/models/products_model.dart';
 import 'package:e_commerce_app/view_model/product_view_model.dart';
 import 'package:flutter/material.dart';
-import 'package:collection/collection.dart';
 import '../core/utils/get_tems_categories.dart';
 
 class CategoryViewModel with ChangeNotifier {

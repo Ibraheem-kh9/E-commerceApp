@@ -11,6 +11,8 @@ class SearchTxtWidget extends StatelessWidget {
     return Expanded(
       child: TextFormField(
         decoration: InputDecoration(
+          filled: true,
+          fillColor: AppColor.backgroundPageViewColor,
           constraints: BoxConstraints(minHeight: 6.h,maxHeight:6.h,maxWidth: 45.h),
           contentPadding: EdgeInsets.only(top: 1.h),
           hintText: 'What are you looking for?',
