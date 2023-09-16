@@ -3,11 +3,9 @@ class CartModel {
   int? itemId;
   String? itemName;
   int? itemQty;
-  /// change dynamic to double
   double? itemPrice;
   double? itemTotalPrices;
   String? itemImage;
-  //dynamic cartTotalPrice;
 
   CartModel({
     this.id,
@@ -17,7 +15,6 @@ class CartModel {
     this.itemQty,
     this.itemPrice,
     this.itemTotalPrices,
-   // this.cartTotalPrice,
   });
 
   factory CartModel.fromJson(Map<String, dynamic> json) {
@@ -26,10 +23,9 @@ class CartModel {
       itemId: json["itemId"],
       itemName: json["itemName"],
       itemImage: json["itemImage"],
-      itemQty: json["itemQty"] ,
+      itemQty: json["itemQty"],
       itemPrice: json["itemPrice"],
       itemTotalPrices: json["itemTotalPrices"],
-     // cartTotalPrice: json["cartTotalPrice"],
     );
   }
 
@@ -42,8 +38,6 @@ class CartModel {
       "itemQty": this.itemQty,
       "itemPrice": this.itemPrice,
       "itemTotalPrices": this.itemTotalPrices,
-     // "cartTotalPrice": this.cartTotalPrice,
     };
   }
-
 }

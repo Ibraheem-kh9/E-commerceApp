@@ -1,3 +1,4 @@
+//TODO: 
 class UsersModel {
   String? id;
   String? name;
@@ -32,7 +33,4 @@ class UsersModel {
       "userPrivilege": this.userPrivilege,
     };
   }
-//
-
-
 }

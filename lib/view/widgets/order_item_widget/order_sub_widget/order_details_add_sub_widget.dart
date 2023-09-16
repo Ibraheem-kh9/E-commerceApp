@@ -4,7 +4,6 @@ import 'package:e_commerce_app/view/widgets/order_item_widget/order_sub_widget/q
 import 'package:e_commerce_app/view/widgets/order_item_widget/order_sub_widget/total_price_section.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
-
 import '../../../../core/utils/constants/constant_color.dart';
 
 class OrderDetailsAddSubWidget extends StatelessWidget {

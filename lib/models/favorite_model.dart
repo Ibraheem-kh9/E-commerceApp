@@ -41,6 +41,4 @@ class FavoriteModel {
       "favProcess": this.favProcess,
     };
   }
-
-//bool isAdded;
 }

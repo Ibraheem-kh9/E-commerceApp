@@ -1,4 +1,3 @@
-
 import 'package:e_commerce_app/models/cart_model.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart';
@@ -31,23 +30,18 @@ class DbHelper {
   _onCreate(Database db, int version) async {
     await db.execute(
         'CREATE TABLE cart (id INTEGER PRIMARY KEY AUTOINCREMENT, itemId INTEGER UNIQUE,itemName TEXT,itemQty INTEGER, itemPrice REAL , itemTotalPrices REAL, itemImage TEXT )');
-    //'CREATE TABLE cart (id INTEGER PRIMARY KEY , itemId INTEGER UNIQUE,itemName TEXT,itemQty INTEGER, itemPrice INTEGER , itemTotalPrices INTEGER, itemImage TEXT )');
-  print('Create');
   }
 
   Future<List<CartModel>?> getDbData() async {
     var dbClient = await db;
     final List<Map<String, dynamic>>? dbResult = await dbClient?.query('cart');
-    print('the data from db helper $dbResult');
     return dbResult?.map((e) => CartModel.fromJson(e)).toList();
 
   }
 
   Future<int> insertDb(CartModel cartModel) async {
-    print('the insert of DBHelper is ${cartModel.toJson()}');
     var dbClient = await db;
     int response = await dbClient!.insert('cart', cartModel.toJson());
-    print('item add to db $response');
     return response;
   }
 
@@ -62,8 +56,8 @@ class DbHelper {
   }
 
   Future<List<Map<String, Object?>>> getItemById(int id) async {
-    var _dbClinet = await db;
-    return await _dbClinet!.query(
+    var dbClient = await db;
+    return await dbClient!.query(
       'cart',
       where: ' itemQty =   ?',
       whereArgs: [id],

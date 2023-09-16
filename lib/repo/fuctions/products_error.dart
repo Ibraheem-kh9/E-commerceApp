@@ -14,12 +14,12 @@ class UserError {
   String? message;
 
   factory UserError.fromJson(Map<String, dynamic> json) => UserError(
-    code: json["code"],
-    message: json["message"],
-  );
+        code: json["code"],
+        message: json["message"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "code": code,
-    "message": message,
-  };
+        "code": code,
+        "message": message,
+      };
 }
