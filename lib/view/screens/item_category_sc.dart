@@ -1,4 +1,3 @@
-import 'package:e_commerce_app/view/main_appbar_widget.dart';
 import 'package:e_commerce_app/view/screens/category_item_order_sc.dart';
 import 'package:e_commerce_app/view/widgets/item_category_widget/custom_category_image_widget.dart';
 import 'package:e_commerce_app/view/widgets/item_category_widget/custom_item_brand_widget.dart';
@@ -10,11 +9,10 @@ import 'package:e_commerce_app/view_model/product_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
-import '../../core/utils/constants/app_routes.dart';
 import '../../models/products_model.dart';
 
 class ItemCategorySc extends StatelessWidget {
-  final List<Product>? catItems;
+  final List<ProductModel>? catItems;
   final String? categoryItemName;
   final int? index;
 

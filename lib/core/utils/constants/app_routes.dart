@@ -10,6 +10,7 @@ class AppRoute {
   static const String confirmPassPage = '/confirmPassPage';
   static const String forgotPassPage = '/forgotPassPage';
   static const String homePage = '/homePage';
+  static const String searchSc = '/searchSc';
   static const String itemDetailOrderSc = '/itemDetailOrderSc';
   static const String favorite = '/favorite';
   static const String cart = '/cart';

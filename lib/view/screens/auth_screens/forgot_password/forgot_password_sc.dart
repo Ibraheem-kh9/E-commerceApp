@@ -6,7 +6,6 @@ import 'package:e_commerce_app/view/widgets/login_screen_widget/login_textform_f
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
-
 import '../../../../view_model/register/reset_password_view_model.dart';
 import '../../../widgets/login_screen_widget/login_button_widget.dart';
 

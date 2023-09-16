@@ -20,9 +20,9 @@ class CategoriesSc extends StatelessWidget {
       backgroundColor: AppColor.kBackgroundColor,
       body: SafeArea(
         child: ListView.builder(
-          itemCount: catViewModel.getCategoryTitle(productViewModel.productModelView!.products!).length,
+          itemCount: catViewModel.getCategoryTitle(productViewModel.productModelView!).length,
           itemBuilder: (context, index) {
-            var catItems = productViewModel.productModelView!.products!;
+            var catItems = productViewModel.productModelView!;
             return Column(
               children: [
                 Container(

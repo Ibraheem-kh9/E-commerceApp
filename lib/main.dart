@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:e_commerce_app/core/services/db_helper.dart';
 import 'package:e_commerce_app/myapp.dart';
 import 'package:e_commerce_app/view_model/app_language_view_model.dart';
 import 'package:firebase_core/firebase_core.dart';

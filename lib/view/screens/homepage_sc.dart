@@ -1,8 +1,8 @@
 import 'package:e_commerce_app/core/utils/constants/app_routes.dart';
 import 'package:e_commerce_app/repo/connectivity_status.dart';
-import 'package:e_commerce_app/view/main_appbar_widget.dart';
-import 'package:e_commerce_app/view/widgets/home_screen_widget/badges_cart_widget.dart';
-import 'package:e_commerce_app/view/widgets/home_screen_widget/bottom_navigator_app_bar/home_bottom_bar.dart';
+import 'package:e_commerce_app/view/widgets/main_app_bar_widget/main_appbar_widget.dart';
+import 'package:e_commerce_app/view/widgets/main_app_bar_widget/badges_cart_widget.dart';
+import 'package:e_commerce_app/view_model/cart_view_model.dart';
 import 'package:e_commerce_app/view_model/favorite_view_model.dart';
 import 'package:e_commerce_app/view_model/product_view_model.dart';
 import 'package:flutter/material.dart';
@@ -12,9 +12,10 @@ import '../../core/utils/constants/constant_color.dart';
 import '../../repo/fuctions/exit_app_alert.dart';
 import 'package:lottie/lottie.dart';
 
+import '../widgets/bottom_navigator_app_bar/home_bottom_bar.dart';
+
 class HomepageSc extends StatelessWidget {
-  HomepageSc({Key? key}) : super(key: key);
-  final PageController _pageController = PageController(initialPage: 0);
+  const HomepageSc({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -71,13 +72,14 @@ class HomepageSc extends StatelessWidget {
                 return Padding(
                   padding: EdgeInsets.only(bottom: 10.0),
                   //child: allScreensView.elementAt(productViewModel.currentIndexBar),
-                  child: PageView(
-                    controller: _pageController,
-                    children: [
-                      productViewModel.screensView
-                          .elementAt(productViewModel.currentIndexBar),
-                    ],
-                  ),
+                  child:
+                  //PageView(
+
+                  //  controller: _pageController,
+                 //   children: [
+                      productViewModel.screensView.elementAt(productViewModel.currentIndexBar),
+                 //   ],
+                //  ),
                 );
               } else if (notify == ConnectivityStatus.offline) {
                 return const Center(
@@ -92,7 +94,7 @@ class HomepageSc extends StatelessWidget {
         ),
         onWillPop: () => exitAppAlert(context),
       ),
-      bottomNavigationBar: const HomeBottomBarWidget(),
+      bottomNavigationBar:  HomeBottomBarWidget(),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.pushNamed(context, AppRoute.cart);

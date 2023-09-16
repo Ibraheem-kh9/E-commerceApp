@@ -1,11 +1,9 @@
-
+import 'package:e_commerce_app/core/utils/constants/app_routes.dart';
 import 'package:e_commerce_app/view/screens/auth_screens/login_page_sc.dart';
-import 'package:e_commerce_app/view/screens/auth_screens/register_page_sc.dart';
 import 'package:e_commerce_app/view/widgets/forgot_password_widgets/forgot_test_widget.dart';
 import 'package:e_commerce_app/view/widgets/login_screen_widget/login_button_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
-
 import '../../../../components/app_local.dart';
 import '../../../../core/utils/constants/constant_color.dart';
 
@@ -30,7 +28,8 @@ class ConfirmResetPasswordSc extends StatelessWidget {
           Align(
             alignment: Alignment.center,
             child: ForgotTextWidget(
-              text: AppLocale.of(context).getTranslated('complete_reset_password_title')!,
+              text: AppLocale.of(context)
+                  .getTranslated('complete_reset_password_title')!,
               fontFamily: 'Times',
               fontWeight: FontWeight.bold,
               color: AppColor.kMainColor,
@@ -42,8 +41,8 @@ class ConfirmResetPasswordSc extends StatelessWidget {
             height: 2.5.h,
           ),
           ForgotTextWidget(
-            text:
-            AppLocale.of(context).getTranslated('complete_reset_password_desc')!,
+            text: AppLocale.of(context)
+                .getTranslated('complete_reset_password_desc')!,
             fontFamily: 'Times',
             fontWeight: FontWeight.normal,
             color: Colors.grey,
@@ -55,12 +54,14 @@ class ConfirmResetPasswordSc extends StatelessWidget {
           ),
           LoginButtonWidget(
             onPress: () {
-              Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context){
-                return LoginSc();
-              }), (route) => false);
-
+              Navigator.pushNamedAndRemoveUntil(
+                context,
+                AppRoute.login,
+                (route) => false,
+              );
             },
-            textButton: AppLocale.of(context).getTranslated('complete_pass_change_button_text')!,
+            textButton: AppLocale.of(context)
+                .getTranslated('complete_pass_change_button_text')!,
             buttonColor: AppColor.kMainColor,
             fixedSize: MaterialStatePropertyAll<Size>(Size(90.w, 6.h)),
           )

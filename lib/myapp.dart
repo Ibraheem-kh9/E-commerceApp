@@ -3,6 +3,7 @@ import 'package:e_commerce_app/components/app_local.dart';
 import 'package:e_commerce_app/repo/connectivity_status.dart';
 import 'package:e_commerce_app/view_model/app_language_view_model.dart';
 import 'package:e_commerce_app/view_model/item_category_view_model.dart';
+import 'package:e_commerce_app/view_model/order_item_view_model.dart';
 import 'package:e_commerce_app/view_model/register/mail_verification_view_model.dart';
 import 'package:e_commerce_app/view_model/register/register_view_model.dart';
 import 'package:e_commerce_app/view_model/login_view_model.dart';
@@ -13,6 +14,7 @@ import 'package:e_commerce_app/view_model/item_detail_view_model.dart';
 import 'package:e_commerce_app/view_model/onboarding_view_model.dart';
 import 'package:e_commerce_app/view_model/product_view_model.dart';
 import 'package:e_commerce_app/view_model/register/reset_password_view_model.dart';
+import 'package:e_commerce_app/view_model/search_view_model.dart';
 import 'package:e_commerce_app/view_model/setting_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -41,11 +43,13 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => ResetPasswordViewModel()),
         ChangeNotifierProvider<RegisterViewModel>(create: (_) => AuthRegisterViewModelImp()),
         ChangeNotifierProvider(create: (_) => ProductViewModel()),
+        ChangeNotifierProvider(create: (_) => OrderItemViewModel()),
+        ChangeNotifierProvider(create: (_) => SearchViewModel()),
         ChangeNotifierProvider(create: (_) => FavoriteViewModel()),
         ChangeNotifierProvider(create: (_) => CategoryViewModel()),
         ChangeNotifierProvider(create: (_) => ItemCategoryViewModel()),
         ChangeNotifierProvider(create: (_) => CartViewModel()),
-        ChangeNotifierProvider(create: (_) => ItemDetailViewModel()),
+        ChangeNotifierProvider(create: (_) => ItemDetailsViewModel()),
         ChangeNotifierProvider(create: (_) => SettingViewModel()),
         StreamProvider<ConnectivityStatus>(
           create: (context) =>

@@ -31,7 +31,7 @@ class CategoryViewModel with ChangeNotifier {
     }
   }
 
-  List<String> getCategoryTitle(List<Product> category) {
+  List<String> getCategoryTitle(List<ProductModel> category) {
     try{
 
       for (var e in category) {

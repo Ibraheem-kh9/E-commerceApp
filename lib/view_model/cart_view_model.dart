@@ -1,6 +1,5 @@
-
-
 import 'package:e_commerce_app/models/favorite_model.dart';
+import 'package:e_commerce_app/models/products_model.dart';
 
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -8,10 +7,13 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../core/services/db_helper.dart';
 import '../models/cart_model.dart';
 
-class CartViewModel with ChangeNotifier {
-  DbHelper dbHelper = DbHelper();
+class CartViewModel extends ChangeNotifier {
+  DbHelper _dbHelper = DbHelper();
+
+  DbHelper get dbHelper => _dbHelper;
+  bool _isLoaded = false;
   List<CartModel> _items = [];
-  Future<List<CartModel>>? _productCart ;
+  Future<List<CartModel>?>? _productCart;
   int _counter = 0;
   bool _isAdded = false;
   int _qty = 0;
@@ -24,7 +26,7 @@ class CartViewModel with ChangeNotifier {
 
   List<CartModel> get items => _items;
 
-  Future<List<CartModel>> get productCart => _productCart!;
+  Future<List<CartModel>?>? get productCart => _productCart;
 
   bool get isAdded => _isAdded;
 
@@ -33,29 +35,51 @@ class CartViewModel with ChangeNotifier {
   double get totalPrice => _totalPrice;
 
   double get cartPrice => _cartPrice;
+
   bool? get isSelected => _isSelected;
 
-  // int get shipping => _shipping;
-
+  /// --------------------------------------------------------------------------
   CartViewModel() {
-    getCartData();
+    readCartData();
   }
 
-  Future<List<CartModel>> getCartData() async {
-      _productCart = dbHelper.getDbData();
-      //notifyListeners();
-      print(_productCart);
-      return _productCart!;
+  ///////////////////
+  bool get isLoaded => _isLoaded;
+  List<CartModel> _addItemToCart = [];
 
+  List<CartModel> get addItemToCart => _addItemToCart;
+
+  insertItemToCart(CartModel cartModel) async {
+    _addItemToCart.add(cartModel);
+    int response = await _dbHelper.insertDb(cartModel);
+    print(' the insert of response is = $response');
+    notifyListeners();
+    return response;
   }
 
-  addCounter() {
+  Future<List<CartModel>> readCartData() async {
+    final data = await _dbHelper.getDbData();
+    print('the data of sqflite are $data');
+    _addItemToCart.addAll(data!);
+    notifyListeners();
+    return data;
+  }
+
+  removeItemFromCart({int? itemId}) async {
+    int response = await _dbHelper.deleteItemFromCart(itemId!);
+    _addItemToCart.removeWhere((element) => element.itemId == itemId);
+    notifyListeners();
+    return response;
+  }
+
+  /// counter of cart icon that display how many item added --------------------
+  increaseCounter() {
     _counter++;
     _setPrefItems();
     notifyListeners();
   }
 
-  removeCounter() {
+  decreaseCounter() {
     _counter--;
     _setPrefItems();
     notifyListeners();
@@ -67,6 +91,25 @@ class CartViewModel with ChangeNotifier {
     return _counter;
   }
 
+  resetCounter() {
+    _counter = 1;
+    _setPrefItems();
+    return _counter;
+  }
+
+  checkProductStatus(int? itemId) {
+    return _addItemToCart.any((item) => item.itemId == itemId);
+  }
+
+  /// --------------------------------------------------------------------------
+  ///
+  ///
+  ///
+  /////////////////////////////////
+
+  // int get shipping => _shipping;
+
+  ///
   cartTotalPriceIncrease({int? qty, double? itemPrice}) {
     _cartPrice = qty! * itemPrice!;
     _setPrefItems();
@@ -87,7 +130,7 @@ class CartViewModel with ChangeNotifier {
   }
 
   setIsAddedStatus(bool status, int index) {
-    _isAdded == status && FavoriteModel().favoriteItemId == index;
+    _isAdded == status && FavoriteModel().id == index;
     print(status);
     notifyListeners();
   }
@@ -131,17 +174,15 @@ class CartViewModel with ChangeNotifier {
     notifyListeners();
   }
 
-  dynamic cartSubTotalPrice(double price){
+  dynamic cartSubTotalPrice(double price) {
     _cartPrice = _cartPrice + price;
     return _cartPrice;
   }
 
-  dynamic cartSubTotalPriceRemove(double price){
+  dynamic cartSubTotalPriceRemove(double price) {
     _cartPrice = (_cartPrice - price);
     return _cartPrice;
   }
-
-
 
   // int get cartSubPrice => _items.fold(
   //       0,
@@ -176,18 +217,20 @@ class CartViewModel with ChangeNotifier {
 
   /// Is add item to cart highlight
 
-  setCartSelectedItems({bool? selectStatus,int? id}){
+  setCartSelectedItems({bool? selectStatus, int? id}) {
     _isSelected = selectStatus!;
     _setPrefItemToCart();
     notifyListeners();
   }
-  void _setPrefItemToCart() async{
+
+  void _setPrefItemToCart() async {
     SharedPreferences _pref = await SharedPreferences.getInstance();
     _pref.setBool('selected', _isSelected);
     notifyListeners();
   }
-  void _getPrefItemToCart()async {
-    SharedPreferences _pref =await SharedPreferences.getInstance();
+
+  void _getPrefItemToCart() async {
+    SharedPreferences _pref = await SharedPreferences.getInstance();
     _pref.getBool('selected') ?? false;
     notifyListeners();
   }

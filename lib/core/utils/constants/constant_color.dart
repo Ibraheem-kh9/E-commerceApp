@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 
 class AppColor{
+
+  static const kBackgroundContainer = Color(0xFFFFFFFF);
   static const kMainColor = Color(0xFF3C3AA6);
   static const kBackgroundColor = Color(0xFFF5F5F3);
+  static const kGreyColor = Colors.grey;
+  static const kBlueColor = Colors.blue;
  // static const kBackgroundColor = Color(0xFFF5F5F5);
   static const kDefaultTextColor = Colors.black;
   static const kDescriptionTextColor = Colors.black54;

@@ -1,3 +1,4 @@
+import 'package:e_commerce_app/core/utils/constants/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
@@ -17,7 +18,7 @@ class ForgotAppBarWidget extends StatelessWidget implements PreferredSizeWidget{
       elevation: 0.0,
       leading: IconButton(
         onPressed: () {
-          Navigator.pop(context);
+          Navigator.pushNamed(context,AppRoute.login);
           resetPasswordViewModel.resetPasswordEditingCtrl.clear();
         },
         icon: Icon(

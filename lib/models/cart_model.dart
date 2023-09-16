@@ -1,8 +1,8 @@
 class CartModel {
-  late int? id;
+  int? id;
   int? itemId;
   String? itemName;
-  dynamic itemQty;
+  int? itemQty;
   /// change dynamic to double
   double? itemPrice;
   double? itemTotalPrices;

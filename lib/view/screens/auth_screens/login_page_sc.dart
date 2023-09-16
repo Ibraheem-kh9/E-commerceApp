@@ -1,5 +1,4 @@
 import 'package:e_commerce_app/models/users_model.dart';
-
 import 'package:e_commerce_app/view/widgets/login_screen_widget/login_button_widget.dart';
 import 'package:e_commerce_app/view/widgets/login_screen_widget/login_or_widget.dart';
 import 'package:e_commerce_app/view/widgets/login_screen_widget/login_text_button_widget.dart';
@@ -14,15 +13,12 @@ import 'package:e_commerce_app/components/app_local.dart';
 import '../../../core/utils/constants/app_routes.dart';
 import '../../../core/utils/constants/constant_color.dart';
 
-
-
 class LoginSc extends StatelessWidget {
   const LoginSc({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final authViewModel =
-        Provider.of<LoginViewModel>(context, listen: false);
+    final authViewModel = Provider.of<LoginViewModel>(context, listen: false);
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -121,7 +117,8 @@ class LoginSc extends StatelessWidget {
                     flex: 1,
                     child: LoginTextButtonWidget(
                       onPress: () {
-                        Navigator.pushReplacementNamed(context, AppRoute.forgotPassPage);
+                        Navigator.pushReplacementNamed(
+                            context, AppRoute.forgotPassPage);
                       },
                       text: AppLocale.of(context)
                           .getTranslated('login_forgot_pass')!,
@@ -151,7 +148,8 @@ class LoginSc extends StatelessWidget {
                             email: authViewModel.logEmailCtrl.text,
                             password: authViewModel.logPasswordCtrl.text,
                           );
-                          await authViewModel.signInWithEmailAndPassword(userModel);
+                          await authViewModel
+                              .signInWithEmailAndPassword(userModel);
 
                           // Navigator.pushAndRemoveUntil(
                           //   context,
@@ -233,7 +231,8 @@ class LoginSc extends StatelessWidget {
                         //// Text button of register ---------------------------
                         LoginTextButtonWidget(
                           onPress: () {
-                            Navigator.pushReplacementNamed(context, AppRoute.register);
+                            Navigator.pushReplacementNamed(
+                                context, AppRoute.register);
                           },
                           text: AppLocale.of(context)
                               .getTranslated('login_register')!,

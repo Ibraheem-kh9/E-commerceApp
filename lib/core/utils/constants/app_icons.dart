@@ -1,6 +1,7 @@
 
 class AppIcons{
 
+  static const starIcon = 'assets/images/icons/star.png';
   static const languageIcon = 'assets/images/icons/language_world.png';
   static const notificationIcon = 'assets/images/icons/notification.png';
   static const accountIcon = 'assets/images/icons/user.png';

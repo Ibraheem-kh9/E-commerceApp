@@ -1,68 +1,46 @@
 class FavoriteModel {
-  int? favoriteItemId;
-  String? favoriteItemName;
-  int? favoriteItemDiscount;
-  int favoriteQty;
-  /// change dynamic to double
-  double? favoriteItemPrice;
-  String? favoriteImage;
-  bool isFavorite ;
-  double? favoriteTotalPrice;
-  //bool isAdded;
+  int? id;
+  String? favTitle;
+  int? favPrice;
+  String? favDescription;
+  int? favDiscount;
+  DateTime? favItemCreate;
+  String? favImage;
+  int? favProcess;
 
-  FavoriteModel({
-    this.favoriteItemId,
-    this.favoriteItemName,
-    this.favoriteItemDiscount,
-    this.favoriteQty = 0,
-    this.favoriteItemPrice,
-    this.favoriteImage,
-    this.isFavorite = false,
-    this.favoriteTotalPrice,
-    //this.isAdded = false,
-  });
+  FavoriteModel(
+      {this.id,
+      this.favTitle,
+      this.favPrice,
+      this.favDescription,
+      this.favDiscount,
+      this.favItemCreate,
+      this.favImage,
+      this.favProcess});
 
-  // factory FavoriteModel.fromJson(Map<String, dynamic> json) {
-  //   return FavoriteModel(
-  //     favoriteItemId: int.parse(json["favoriteItemId"]),
-  //     favoriteItemName: json["favoriteItemName"],
-  //     favoriteItemDiscount: int.parse(json["favoriteItemDiscount"]),
-  //     favoriteItemPrice: json["favoriteItemPrice"],
-  //     favoriteImage: json["favoriteImage"],
-  //     isFavorite: json["isFavorite"].toLowerCase() == 'true',
-  //     isAdded: json["isAdded"].toLowerCase() == 'true',
-  //   );
-  // }
-
-  factory FavoriteModel.fromJson(Map<String, dynamic> json) {
-    return FavoriteModel(
-      favoriteItemId: json["favoriteItemId"],
-      //favoriteItemId: int.parse(json["favoriteItemId"]),
-      favoriteItemName: json["favoriteItemName"],
-      favoriteItemDiscount: json["favoriteItemDiscount"],
-      favoriteQty: json["favoriteQty"],
-      favoriteItemPrice: json["favoriteItemPrice"],
-      favoriteImage: json["favoriteImage"],
-      isFavorite: json["isFavorite"] ?? false,
-      favoriteTotalPrice: json["favoriteTotalPrice"] ?? 0.0,
-     // isAdded: json["isAdded"] ?? false,
-    );
-  }
+  factory FavoriteModel.fromJson(Map<String, dynamic> json) => FavoriteModel(
+        id: json["id"],
+        favTitle: json["favTitle"],
+        favPrice: json["favPrice"],
+        favDescription: json["favDescription"],
+        favDiscount: json["favDiscount"],
+        favItemCreate: json["favItemCreate"],
+        favImage: json["favImage"],
+        favProcess: json["favProcess"],
+      );
 
   Map<String, dynamic> toJson() {
     return {
-      "favoriteItemId": this.favoriteItemId,
-      "favoriteItemName": this.favoriteItemName,
-      "favoriteItemDiscount": this.favoriteItemDiscount,
-      "favoriteQty": this.favoriteQty,
-      "favoriteItemPrice": this.favoriteItemPrice,
-      "favoriteImage": this.favoriteImage,
-      "isFavorite": this.isFavorite,
-      "favoriteTotalPrice": this.favoriteTotalPrice,
-     // "isAdded": this.isAdded,
+      "id": this.id,
+      "favTitle": this.favTitle,
+      "favPrice": this.favPrice,
+      "favDescription": this.favDescription,
+      "favDiscount": this.favDiscount,
+      "favItemCreate": this.favItemCreate?.toIso8601String(),
+      "favImage": this.favImage,
+      "favProcess": this.favProcess,
     };
   }
-//
 
-
+//bool isAdded;
 }

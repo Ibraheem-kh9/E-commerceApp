@@ -1,5 +1,4 @@
 import 'package:e_commerce_app/view/screens/cart_sc.dart';
-import 'package:e_commerce_app/view/widgets/home_screen_widget/animated_search_bar_widget.dart';
 import 'package:e_commerce_app/view_model/cart_view_model.dart';
 import 'package:e_commerce_app/view_model/product_view_model.dart';
 import 'package:flutter/material.dart';

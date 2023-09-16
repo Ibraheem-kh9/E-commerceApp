@@ -3,7 +3,7 @@ import 'package:e_commerce_app/models/products_model.dart';
 import 'package:e_commerce_app/repo/api_status.dart';
 import 'package:http/http.dart' as http;
 
-import '../utils/constants/constants.dart';
+import '../utils/constants/constants_link.dart';
 
 class ProductsServices {
   Future<Object> fetchProducts() async {
