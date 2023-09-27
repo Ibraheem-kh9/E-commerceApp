@@ -1,14 +1,18 @@
+import 'package:e_commerce_app/view/widgets/cart_screen_widget/cart_sub_widget/cart_text_section.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../core/utils/constants/constant_color.dart';
+import '../../../view_model/cart_view_model.dart';
 
 class CustomCartSummaryWidget extends StatelessWidget {
   const CustomCartSummaryWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    final cartViewModel = Provider.of<CartViewModel>(context);
+    return SizedBox(
       height: 25.h,
       width: double.infinity,
       child: BottomAppBar(
@@ -25,52 +29,51 @@ class CustomCartSummaryWidget extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                Text(
-                  'Sub-Total : ',
-                  style: TextStyle(
-                    fontSize: 18.sp,
-                    fontWeight: FontWeight.bold,
-                  ),
+                CartTextWidget(
+                  text: 'Line Total : ',
+                  fontSize: 18.sp,
+                  fontColor: AppColor.kGreyColor,
                 ),
-                Text(
-                  '1000',
-                  // '${cart.getCartTotalPrice()}',
-                  //'${cart.cartSubPrice}',
-                  style: TextStyle(fontSize: 23.0, fontWeight: FontWeight.bold),
+                CartTextWidget(
+                  text: '${cartViewModel.cartSubPrice} \$',
+                  fontSize: 16.sp,
+                  fontColor: AppColor.kDefaultTextColor,
                 ),
               ],
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  'Shipping : ',
-                  style: TextStyle(fontSize: 23.0, fontWeight: FontWeight.bold),
+                CartTextWidget(
+                  text: 'Shipping : ',
+                  fontSize: 18.sp,
+                  fontColor: AppColor.kGreyColor,
                 ),
-                Text(
-                  '3',
-                  // cart.shipping.toString(),
-                  style: TextStyle(fontSize: 23.0, fontWeight: FontWeight.bold),
+                CartTextWidget(
+                  text: '${cartViewModel.shipping} \$',
+                  fontSize: 16.sp,
+                  fontColor: AppColor.kDefaultTextColor,
                 ),
               ],
             ),
             Divider(
               thickness: 1,
               color: AppColor.kMainColor,
-              endIndent: 15.0,
-              indent: 15.0,
+              endIndent: 2.5.h,
+              indent: 2.5.h,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  'Total Price : ',
-                  style: TextStyle(fontSize: 23.0, fontWeight: FontWeight.bold),
+                CartTextWidget(
+                  text: 'Net Total : ',
+                  fontSize: 18.sp,
+                  fontColor: AppColor.kDefaultTextColor,
                 ),
-                Text(
-                  '',
-                  //'${cart.cartTotalPrices}',
-                  style: TextStyle(fontSize: 23.0, fontWeight: FontWeight.bold),
+                CartTextWidget(
+                  text: '${cartViewModel.cartTotalPrices} \$',
+                  fontSize: 17.sp,
+                  fontColor: AppColor.kDefaultTextColor,
                 ),
               ],
             ),
@@ -80,15 +83,16 @@ class CustomCartSummaryWidget extends StatelessWidget {
                 onPressed: () {},
                 style: ButtonStyle(
                   backgroundColor:
-                      MaterialStatePropertyAll(AppColor.kMainColor),
+                      const MaterialStatePropertyAll(AppColor.kMainColor),
                   shape: MaterialStatePropertyAll(RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(20.0)))),
-                  minimumSize: MaterialStatePropertyAll(Size(150.0, 45.0)),
-                  maximumSize: MaterialStatePropertyAll(Size(150.0, 45.0)),
+                      borderRadius: BorderRadius.all(Radius.circular(10.h)))),
+                  minimumSize: MaterialStatePropertyAll(Size(20.h, 5.h)),
+                  maximumSize: MaterialStatePropertyAll(Size(20.h, 5.h)),
                 ),
                 child: Text(
-                  'Pay',
-                  style: TextStyle(fontSize: 23.0, fontWeight: FontWeight.bold),
+                  'Send Order',
+                  style:
+                      TextStyle(fontSize: 15.sp, fontWeight: FontWeight.bold),
                 ),
               ),
             ),

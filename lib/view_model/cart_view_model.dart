@@ -8,17 +8,15 @@ import '../core/services/db_helper.dart';
 import '../models/cart_model.dart';
 
 class CartViewModel extends ChangeNotifier {
-  DbHelper _dbHelper = DbHelper();
+  final DbHelper _dbHelper = DbHelper();
 
   DbHelper get dbHelper => _dbHelper;
-  bool _isLoaded = false;
-  List<CartModel> _items = [];
-  Future<List<CartModel>?>? _productCart;
+  final List<CartModel> _items = [];
   int _counter = 0;
   bool _isAdded = false;
   int _qty = 0;
   double _totalPrice = 0.0;
-  double _cartPrice = 0;
+  double _cartLineTotal = 0;
   int shipping = 3;
   bool _isSelected = false;
 
@@ -26,15 +24,13 @@ class CartViewModel extends ChangeNotifier {
 
   List<CartModel> get items => _items;
 
-  Future<List<CartModel>?>? get productCart => _productCart;
-
   bool get isAdded => _isAdded;
 
   int get itemQuantity => _qty;
 
   double get totalPrice => _totalPrice;
 
-  double get cartPrice => _cartPrice;
+  double get cartLineTotal => _cartLineTotal;
 
   bool? get isSelected => _isSelected;
 
@@ -44,7 +40,6 @@ class CartViewModel extends ChangeNotifier {
   }
 
   ///////////////////
-  bool get isLoaded => _isLoaded;
   List<CartModel> _addItemToCart = [];
 
   List<CartModel> get addItemToCart => _addItemToCart;
@@ -84,46 +79,42 @@ class CartViewModel extends ChangeNotifier {
 
   getCounter() {
     _getPrefItems();
-    //notifyListeners();
     return _counter;
   }
 
-  resetCounter() {
-    _counter = 1;
-    _setPrefItems();
-    return _counter;
-  }
+  double get cartSubPrice => _addItemToCart.fold(
+        0,
+        (dynamic previousValue, CartModel cartModel) =>
+            previousValue + cartModel.itemTotalPrices,
+      );
 
-  checkProductStatus(int? itemId) {
-    return _addItemToCart.any((item) => item.itemId == itemId);
+  double get cartTotalPrices {
+    var total = cartSubPrice + shipping;
+    return total;
   }
 
   /// --------------------------------------------------------------------------
   ///
   ///
   ///
-  /////////////////////////////////
 
-  // int get shipping => _shipping;
-
-  ///
-  cartTotalPriceIncrease({int? qty, double? itemPrice}) {
-    _cartPrice = qty! * itemPrice!;
+  cartTotalPriceIncrease({int? qty, double? itemTotalPrice}) {
+    _cartLineTotal = qty! * itemTotalPrice!;
     _setPrefItems();
     notifyListeners();
-    return _cartPrice;
+    return _cartLineTotal;
   }
 
   cartTotalPriceDecrease({int? qty, int? itemPrice}) {
-    _cartPrice = qty! * itemPrice! - 1;
+    _cartLineTotal = qty! * itemPrice! - 1;
     _setPrefItems();
     notifyListeners();
-    return _cartPrice;
+    return _cartLineTotal;
   }
 
   getCartTotalPrice() {
     _getPrefItems();
-    return _cartPrice;
+    return _cartLineTotal;
   }
 
   setIsAddedStatus(bool status, int index) {
@@ -132,65 +123,22 @@ class CartViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  setItemZero() {
-    _qty = 0;
-    notifyListeners();
-  }
 
-  setTotalPriceToZero() {
-    _totalPrice = 0.0;
-  }
 
-  itemQtyDecrease() {
-    _qty--;
-    notifyListeners();
-  }
-
-  // itemTotalPriceIncrease(dynamic price) {
-  //   _totalPrice = itemQuantity * price;
-  //   notifyListeners();
-  //   return _totalPrice;
-  // }
-
-  // itemTotalPriceDecrease(dynamic price) {
-  //   _totalPrice = itemQuantity * price -1;
-  //   notifyListeners();
-  //   return _totalPrice;
-  // }
-
-  addItem(CartModel cartModel) {
-    _items.add(cartModel);
-    notifyListeners();
-  }
-
-  void removeItem(int id) {
-    final index =
-        _items.indexWhere((CartModel cartModel) => cartModel.itemId == id);
-    _items.removeAt(index);
-
-    notifyListeners();
-  }
 
   dynamic cartSubTotalPrice(double price) {
-    _cartPrice = _cartPrice + price;
-    return _cartPrice;
+    _cartLineTotal = _cartLineTotal + price;
+    return _cartLineTotal;
   }
 
   dynamic cartSubTotalPriceRemove(double price) {
-    _cartPrice = (_cartPrice - price);
-    return _cartPrice;
+    _cartLineTotal = (_cartLineTotal - price);
+    return _cartLineTotal;
   }
 
-  // int get cartSubPrice => _items.fold(
-  //       0,
-  //       (dynamic previousValue, CartModel cartModel) =>
-  //           previousValue + cartModel.itemTotalPrices,
-  //     );
 
-  // dynamic get cartTotalPrices {
-  //   var total = cartSubPrice + shipping;
-  //   return total;
-  // }
+
+
 
   // Future<void> saveCart() async {
   //   final prefs = await _prefs;
@@ -201,14 +149,14 @@ class CartViewModel extends ChangeNotifier {
   void _setPrefItems() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     pref.setInt('cart_count', counter);
-    pref.setDouble('cart_price', cartPrice);
+    pref.setDouble('cart_price', cartLineTotal);
     notifyListeners();
   }
 
   void _getPrefItems() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     _counter = pref.getInt('cart_count') ?? 0;
-    _cartPrice = pref.getDouble('cart_price') ?? 0.0;
+    _cartLineTotal = pref.getDouble('cart_price') ?? 0.0;
     notifyListeners();
   }
 

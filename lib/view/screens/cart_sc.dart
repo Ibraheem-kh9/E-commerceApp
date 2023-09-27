@@ -15,7 +15,7 @@ class CartSc extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     AppLocale localeLang = AppLocale.of(context);
-    final cartViewModel = Provider.of<CartViewModel>(context);
+
     return Scaffold(
       backgroundColor: AppColor.kBackgroundColor,
       appBar: const MainAppbarWidget(appbarTitle: 'My Cart'),
