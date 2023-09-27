@@ -31,6 +31,15 @@ class AuthRegisterViewModelImp extends RegisterViewModel {
   AuthService authService = AuthService();
   FirebaseFirestore userStore = FirebaseFirestore.instance;
 
+
+  @override
+  void dispose() {
+    regFullNameCtrl.dispose();
+    regEmailCtrl.dispose();
+    regPasswordCtrl.dispose();
+    regPasswordConfirmCtrl.dispose();
+    super.dispose();
+  }
   @override
   setLogPassToggle() {
     _passToggle = !_passToggle;

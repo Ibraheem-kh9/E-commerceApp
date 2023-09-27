@@ -6,6 +6,7 @@ class LoginButtonWidget extends StatelessWidget {
   final String textButton;
   final Color buttonColor;
   final MaterialStateProperty<Size>? fixedSize;
+
   const LoginButtonWidget({
     Key? key,
     required this.onPress,
@@ -18,13 +19,15 @@ class LoginButtonWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       alignment: Alignment.center,
-      margin: EdgeInsets.only(right: 3.5.h, left: 3.5.h, bottom: 2.h),
-      //width: 10.w,
-      height: 4.5.h,
+      height: 5.5.h,
       decoration: BoxDecoration(
-          color: buttonColor,
-          // color: AppColor.kMainColor.withOpacity(0.8),
-          borderRadius: BorderRadius.all(Radius.circular(5.w))),
+        color: buttonColor,
+        borderRadius: BorderRadius.all(
+          Radius.circular(
+            5.w,
+          ),
+        ),
+      ),
       child: ElevatedButton(
         onPressed: onPress,
         style: ButtonStyle(
@@ -39,7 +42,7 @@ class LoginButtonWidget extends StatelessWidget {
           backgroundColor: const MaterialStatePropertyAll(Colors.transparent),
           overlayColor: const MaterialStatePropertyAll(Colors.transparent),
           splashFactory: NoSplash.splashFactory,
-          elevation: MaterialStatePropertyAll(0.0)
+          elevation: const MaterialStatePropertyAll(0.0),
         ),
         child: Text(
           textButton,

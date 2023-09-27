@@ -17,7 +17,7 @@ class ProductModel {
   final String? thumbnail;
   final List<String>? images;
   final int? favorite;
-  final int? itemQty;
+  int? itemQty;
   final int? itemActive;
 
   ProductModel({

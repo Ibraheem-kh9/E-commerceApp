@@ -1,4 +1,5 @@
 import 'package:e_commerce_app/core/utils/constants/constant_color.dart';
+import 'package:e_commerce_app/models/cart_model.dart';
 import 'package:e_commerce_app/view/widgets/cart_screen_widget/cart_sub_widget/cart_image_section.dart';
 import 'package:e_commerce_app/view/widgets/cart_screen_widget/cart_sub_widget/cart_item_btn_section.dart';
 import 'package:e_commerce_app/view/widgets/cart_screen_widget/cart_sub_widget/cart_text_section.dart';
@@ -52,14 +53,12 @@ class CustomCartItemsWidget extends StatelessWidget {
                           fontColor: AppColor.kDefaultTextColor,
                         ),
                         CartTextWidget(
-                          text: cartViewModel.addItemToCart[index].itemPrice
-                              .toString(),
+                          text: 'Price: ${cartViewModel.addItemToCart[index].itemPrice} \$',
                           fontSize: 11.sp,
                           fontColor: AppColor.kIconColor,
                         ),
                         CartTextWidget(
-                          text: cartViewModel.addItemToCart[index].itemQty!
-                              .toString(),
+                          text: 'Qty: ${cartViewModel.addItemToCart[index].itemQty!}',
                           fontSize: 12.sp,
                           fontColor: AppColor.kDefaultTextColor,
                         ),
@@ -85,7 +84,7 @@ class CustomCartItemsWidget extends StatelessWidget {
                                 itemId: notify.addItemToCart[index].itemId!,
                               );
                               notify.decreaseCounter();
-                              return response;
+
                               // print(
                               //     'the Id is ${cartViewModel.addItemToCart[index].id!} + '
                               //         'the item ID is ${cartViewModel.addItemToCart[index].id!}');

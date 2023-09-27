@@ -1,10 +1,7 @@
-import 'package:e_commerce_app/core/services/auth_services.dart';
-import 'package:e_commerce_app/models/favorite_model.dart';
 import 'package:e_commerce_app/models/image_promo_model.dart';
 import 'package:e_commerce_app/repo/fuctions/products_error.dart';
 import 'package:e_commerce_app/models/products_model.dart';
 import 'package:e_commerce_app/repo/api_status.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import '../core/services/product_services.dart';
@@ -19,7 +16,6 @@ class ProductViewModel with ChangeNotifier {
   List<ProductModel>? _productModelView;
   UserError _userError = UserError();
   int currentIndexBar = 0;
-  bool isExpanded = false;
   List<ImagePromoModel>? _imagePromoModel = [];
   Set<ProductModel> _highestItemRate = {};
 
@@ -79,30 +75,13 @@ class ProductViewModel with ChangeNotifier {
   // }
 
 
-  setFavoriteCheck(int index) {
-    // _productModelView!.products![index].isFavorite =
-    // !_productModelView!.products![index].isFavorite!;
-    notifyListeners();
-  }
-
   setLoading(bool loading) async {
     _loading = loading;
     notifyListeners();
   }
-  setExpanded() async {
-    isExpanded = !isExpanded;
-    print(isExpanded);
-    notifyListeners();
-  }
-  setItemZero(int id) {
-    // final index = productModelView!.products!
-    //     .indexWhere((Product product) => product.id == id);
-    // productModelView!.products![index].quantity = 0;
-    // notifyListeners();
-  }
+
   setProductModelList(List<ProductModel>? productModelList) {
     _productModelView = productModelList;
-
   }
   // setProductModelList(ProductModel productModelList) {
   //   _productModelView = productModelList;
@@ -131,15 +110,7 @@ class ProductViewModel with ChangeNotifier {
 
   }
 
-  incrementProductQty(int id) {
-    final index = productModelView?.indexWhere((ProductModel product) => product.id == id);
-    //final index = productModelView?.indexWhere((Product product) => product.id == id);
-    if (index! >= 0) {
-     // productModelView?[index].quantity++;
-     // notifyListeners();
-    }
-   // print(productModelView?.products![index].quantity);
-  }
+
 
   decrementProductQty(int id) {
     // final index = productModelView?.products!.indexWhere((Product product) => product.id == id);

@@ -1,10 +1,8 @@
 import 'package:e_commerce_app/components/app_local.dart';
-import 'package:e_commerce_app/view/screens/auth_screens/forgot_password/confirm_reset_password_sc.dart';
 import 'package:e_commerce_app/view_model/login_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
-
 import '../../../../core/utils/constants/app_routes.dart';
 import '../../../../core/utils/constants/constant_color.dart';
 import '../../../widgets/forgot_password_widgets/forgot_appbar.dart';
@@ -21,28 +19,21 @@ class ResetPasswordSc extends StatelessWidget {
     final authViewModel = Provider.of<LoginViewModel>(context);
     return Scaffold(
       backgroundColor: AppColor.backgroundPageViewColor,
-      appBar: ForgotAppBarWidget(),
+      appBar: const ForgotAppBarWidget(),
       body: ListView(
-        physics: NeverScrollableScrollPhysics(),
+        padding: EdgeInsets.symmetric(vertical: 1.h,horizontal: 3.h),
+        physics: const NeverScrollableScrollPhysics(),
         children: [
           Image.asset(
             'assets/images/login_process/reset_password.png',
             fit: BoxFit.fill,
           ),
-          Padding(
-            padding: EdgeInsets.only(
-              right: 3.5.h,
-              left: 3.5.h,
-              top: 2.h,
-              bottom: 2.h,
-            ),
-            child: ForgotTextWidget(
-              text: locale.getTranslated('reset_pass_title')!,
-              fontFamily: 'Times',
-              fontWeight: FontWeight.bold,
-              color: AppColor.kMainColor,
-              size: 25.sp,
-            ),
+          ForgotTextWidget(
+            text: locale.getTranslated('reset_pass_title')!,
+            fontFamily: 'Times',
+            fontWeight: FontWeight.bold,
+            color: AppColor.kMainColor,
+            size: 25.sp,
           ),
           SizedBox(
             height: 3.h,
@@ -97,7 +88,7 @@ class ResetPasswordSc extends StatelessWidget {
             height: 2.h,
           ),
           LoginButtonWidget(
-            fixedSize: MaterialStatePropertyAll<Size>(Size(90.w, 6.h)),
+            fixedSize: MaterialStatePropertyAll<Size>(Size(90.w, 5.5.h)),
             buttonColor: AppColor.kMainColor.withOpacity(0.8),
             onPress: () async {
               Navigator.pushNamed(context, AppRoute.confirmPassPage);

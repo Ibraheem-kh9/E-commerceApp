@@ -23,10 +23,7 @@ class ResetPasswordViewModel with ChangeNotifier {
       navigatorKey.currentState!.pushNamed(AppRoute.confirmPassPage);
 
     } catch (e) {
-      print(e);
       showDialog(
-
-
         context: navigatorKey.currentContext!,
         builder: (context) {
           return const AlertDialog(

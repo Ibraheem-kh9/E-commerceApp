@@ -9,10 +9,7 @@ class OnBoardingViewModel extends ChangeNotifier {
   int get currentIndex => _currentIndex;
 
   OnBoardingViewModel() {
-
-      pageController = PageController();
-
-
+    pageController = PageController();
   }
 
   onChangePageView(int value) {
@@ -32,8 +29,6 @@ class OnBoardingViewModel extends ChangeNotifier {
       pageController.animateToPage(_currentIndex,
           duration: const Duration(milliseconds: 800), curve: Curves.easeInOut);
     });
-
-
 
     notifyListeners();
   }

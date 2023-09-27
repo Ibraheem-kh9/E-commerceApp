@@ -44,8 +44,8 @@ class OrderAddToCartWidget extends StatelessWidget {
                     itemName: product.title,
                     itemImage: product.thumbnail,
                     itemPrice: product.price!.toDouble(),
-                    itemQty: 1,
-                    itemTotalPrices: 978,
+                    itemQty: context.read<OrderItemViewModel>().qty,
+                    itemTotalPrices: 1061,
                   );
                   print('the cart insert data are $cartModel');
 

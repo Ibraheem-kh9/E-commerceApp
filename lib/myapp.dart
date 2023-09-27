@@ -1,6 +1,15 @@
 import 'package:device_preview/device_preview.dart';
 import 'package:e_commerce_app/components/app_local.dart';
 import 'package:e_commerce_app/repo/connectivity_status.dart';
+import 'package:e_commerce_app/view/screens/auth_screens/forgot_password/confirm_reset_password_sc.dart';
+import 'package:e_commerce_app/view/screens/auth_screens/forgot_password/forgot_password_sc.dart';
+import 'package:e_commerce_app/view/screens/auth_screens/forgot_password/reset_password_sc.dart';
+import 'package:e_commerce_app/view/screens/auth_screens/login_page_sc.dart';
+import 'package:e_commerce_app/view/screens/auth_screens/register_email_verified_sc.dart';
+import 'package:e_commerce_app/view/screens/auth_screens/register_page_sc.dart';
+import 'package:e_commerce_app/view/screens/cart_sc.dart';
+import 'package:e_commerce_app/view/screens/categories_sc.dart';
+import 'package:e_commerce_app/view/screens/category_item_order_sc.dart';
 import 'package:e_commerce_app/view_model/app_language_view_model.dart';
 import 'package:e_commerce_app/view_model/item_category_view_model.dart';
 import 'package:e_commerce_app/view_model/order_item_view_model.dart';
@@ -94,7 +103,7 @@ class MyApp extends StatelessWidget {
                 //home: const SplashPageSc(),
                 //home: const HomepageSc(),
                // home:  CheckLanguageApp(),
-               // home:  WrapperPageSc(),
+                //home:  CategoryItemOrderSc(),
                 initialRoute: AppRoute.wrapperPage,
                 routes: routes,
               );

@@ -3,6 +3,7 @@ import 'package:e_commerce_app/view/widgets/order_item_widget/order_item_rate_wi
 import 'package:e_commerce_app/view/widgets/order_item_widget/order_price_widget.dart';
 import 'package:e_commerce_app/view/widgets/order_item_widget/order_sub_widget/order_details_add_sub_widget.dart';
 import 'package:e_commerce_app/view_model/cart_view_model.dart';
+import 'package:e_commerce_app/view_model/order_item_view_model.dart';
 import 'package:e_commerce_app/view_model/product_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -15,12 +16,17 @@ import '../widgets/order_item_widget/item_text_widget.dart';
 import '../widgets/order_item_widget/order_image_list_widget.dart';
 
 class OrderItemSc extends StatelessWidget {
+  final int? index;
   final ProductModel? product;
   final FavoriteModel? favoriteModel;
   final ProductViewModel? productViewModel;
 
   const OrderItemSc(
-      {Key? key, this.product, this.productViewModel, this.favoriteModel})
+      {Key? key,
+      this.product,
+      this.productViewModel,
+      this.favoriteModel,
+      this.index})
       : super(key: key);
 
   @override
@@ -34,7 +40,7 @@ class OrderItemSc extends StatelessWidget {
           children: [
             // Order Images Slider----------------------------------------------
             Expanded(
-              flex: 2,
+              flex: 3,
               child: Stack(
                 children: [
                   Positioned.fill(
@@ -47,6 +53,7 @@ class OrderItemSc extends StatelessWidget {
                     left: 1.w,
                     child: IconButton(
                       onPressed: () {
+                        context.read<OrderItemViewModel>().resetValue(id: product!.id!);
                         Navigator.pop(context);
                       },
                       icon: Icon(
@@ -62,10 +69,13 @@ class OrderItemSc extends StatelessWidget {
             SizedBox(
               height: 1.h,
             ),
-            OrderImageListWidget(imageLength: product!.images!.length),
+            Expanded(
+                flex: 0,
+                child:
+                    OrderImageListWidget(imageLength: product!.images!.length)),
 
             Expanded(
-              flex: 2,
+              flex: 5,
               child: Container(
                 margin: EdgeInsets.symmetric(horizontal: 1.5.h, vertical: 1.h),
                 child: Column(
@@ -81,9 +91,6 @@ class OrderItemSc extends StatelessWidget {
                       textName: product!.title!,
                       fontSize: 15.sp,
                       color: AppColor.kDefaultTextColor,
-                    ),
-                    SizedBox(
-                      height: 2.h,
                     ),
                     OrderItemRateWidget(
                       rate: product!.rating!,
@@ -108,14 +115,14 @@ class OrderItemSc extends StatelessWidget {
                 ),
               ),
             ),
-            Consumer<CartViewModel>(
-              builder: (context, cartNotify, child) =>
-                  !cartNotify.checkProductStatus(product!.id!)
-                      ? OrderAddToCartWidget(
-                          product: product!,
-                          productId: product!.id!,
-                        )
-                      : Expanded(child: OrderDetailsAddSubWidget()),
+            Expanded(
+              flex: 2,
+              child: OrderDetailsAddSubWidget(
+                index: index!,
+                id: product!.id!,
+                productViewModel: productViewModel!,
+                productModel: product,
+              ),
             ),
             //// Increase or Decrease Qty of item in order----------------------
             /*Positioned.fill(

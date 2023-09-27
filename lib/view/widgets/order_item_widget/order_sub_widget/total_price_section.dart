@@ -4,7 +4,7 @@ import 'package:sizer/sizer.dart';
 import '../../../../core/utils/constants/constant_color.dart';
 
 class TotalPriceSection extends StatelessWidget {
-  final int price;
+  final dynamic price;
   const TotalPriceSection({super.key, required this.price});
 
   @override

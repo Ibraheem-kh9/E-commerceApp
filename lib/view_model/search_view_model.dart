@@ -1,4 +1,3 @@
-import 'package:collection/collection.dart';
 import 'package:e_commerce_app/view_model/product_view_model.dart';
 import 'package:flutter/material.dart';
 
@@ -15,30 +14,25 @@ class SearchViewModel with ChangeNotifier {
   String searchText = '';
 
   updateData(ProductViewModel? productModelData) {
-    try{
+    try {
       if (searchText.isEmpty) {
         _resultList.clear();
       } else {
         _resultList.addAll(
-          productModelData!.productModelView!
-              .where(
-                  (element) {
-                final title = element.title!.toLowerCase();
-                final brand = element.brand!.toLowerCase();
-                final searchLower = searchText.toLowerCase();
-                return title.startsWith(searchLower) ||
-                    brand.startsWith(searchLower);
-              }
-          )
-              .toList(),
+          productModelData!.productModelView!.where((element) {
+            final title = element.title!.toLowerCase();
+            final brand = element.brand!.toLowerCase();
+            final searchLower = searchText.toLowerCase();
+            return title.startsWith(searchLower) ||
+                brand.startsWith(searchLower);
+          }).toList(),
         );
       }
       notifyListeners();
-    } catch (e){
+    } catch (e) {
       print(e);
-      rethrow ;
+      rethrow;
     }
-
   }
 
   searchProduct({String? value, ProductViewModel? productModelData}) {

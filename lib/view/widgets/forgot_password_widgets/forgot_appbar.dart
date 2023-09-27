@@ -2,12 +2,10 @@ import 'package:e_commerce_app/core/utils/constants/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
-
 import '../../../core/utils/constants/constant_color.dart';
 import '../../../view_model/register/reset_password_view_model.dart';
 
 class ForgotAppBarWidget extends StatelessWidget implements PreferredSizeWidget{
-
   const ForgotAppBarWidget({super.key});
 
   @override
@@ -31,6 +29,5 @@ class ForgotAppBarWidget extends StatelessWidget implements PreferredSizeWidget{
   }
 
   @override
-  // TODO: implement preferredSize
-  Size get preferredSize => const Size.fromHeight(70 / 100 * 75 );
+  Size get preferredSize =>  Size.fromHeight(7.h);
 }

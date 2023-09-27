@@ -5,19 +5,19 @@ import 'package:flutter/material.dart';
 import '../core/utils/get_tems_categories.dart';
 
 class CategoryViewModel with ChangeNotifier {
-
   ProductViewModel? productViewModel;
   final List<CategoryModel> _categoryModel = [];
   final List<String> _catTitle = [];
-
-
+  bool _isLoading = false;
+  bool get isLoading => _isLoading;
   List<CategoryModel>? get categoryModel => _categoryModel;
-  List<String>? get catTitle => _catTitle;
 
+  List<String>? get catTitle => _catTitle;
 
   CategoryViewModel() {
     addCategory();
   }
+
 
   addCategory() {
     try {
@@ -32,19 +32,20 @@ class CategoryViewModel with ChangeNotifier {
   }
 
   List<String> getCategoryTitle(List<ProductModel> category) {
-    try{
+
+    try {
 
       for (var e in category) {
-        !_catTitle.contains(e.category) == true ?  _catTitle.add(e.category!) : const Text('no Data Found');
+        !_catTitle.contains(e.category) == true
+            ? _catTitle.add(e.category!)
+            : const Text('no Data Found');
       }
+
       return _catTitle;
-    }catch(e){
-     Text(e.toString());
+    } catch (e) {
+      Text(e.toString());
     }
+
     return [];
   }
-
-
-
-
 }

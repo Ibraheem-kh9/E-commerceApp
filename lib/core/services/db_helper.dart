@@ -55,12 +55,13 @@ class DbHelper {
     );
   }
 
-  Future<List<Map<String, Object?>>> getItemById(int id) async {
+  Future<List<CartModel>> getItemById(int id) async {
     var dbClient = await db;
-    return await dbClient!.query(
+    var data =  await dbClient!.query(
       'cart',
-      where: ' itemQty =   ?',
+      where: ' itemId =   ?',
       whereArgs: [id],
     );
+    return data.map((e) => CartModel.fromJson(e)).toList();
   }
 }

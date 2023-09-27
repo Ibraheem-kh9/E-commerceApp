@@ -1,4 +1,6 @@
+import 'package:e_commerce_app/view_model/order_item_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../../core/utils/constants/constant_color.dart';
@@ -6,7 +8,14 @@ import '../../../../core/utils/constants/constant_color.dart';
 class QtyChangeSection extends StatelessWidget {
   final Widget increaseWidget;
   final Widget decreaseWidget;
-  const QtyChangeSection({super.key, required this.increaseWidget, required this.decreaseWidget});
+  final int qty;
+
+  const QtyChangeSection({
+    super.key,
+    required this.increaseWidget,
+    required this.decreaseWidget,
+    required this.qty,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +34,7 @@ class QtyChangeSection extends StatelessWidget {
         children: [
           increaseWidget,
           Text(
-            '1',
+            qty.toString(),
             style: TextStyle(
                 fontSize: 18.sp, color: AppColor.kBackgroundContainer),
           ),

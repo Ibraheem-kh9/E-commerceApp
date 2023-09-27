@@ -50,6 +50,7 @@ class CustomAllProductsWidget extends StatelessWidget {
 
               Navigator.push(context, MaterialPageRoute(builder: (context) {
                 return OrderItemSc(
+                  index : index1,
                   product: product,
                   productViewModel: productViewModel,
                 );

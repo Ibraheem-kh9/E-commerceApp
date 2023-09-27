@@ -41,7 +41,7 @@ class HomeWidget extends StatelessWidget {
                 },
               ),
 
-              const CustomHomeNotificationWidget(),
+               CustomHomeNotificationWidget(),
             ],
           ),
         ),

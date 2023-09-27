@@ -52,17 +52,14 @@ class CartViewModel extends ChangeNotifier {
   insertItemToCart(CartModel cartModel) async {
     _addItemToCart.add(cartModel);
     int response = await _dbHelper.insertDb(cartModel);
-    print(' the insert of response is = $response');
     notifyListeners();
     return response;
   }
 
-  Future<List<CartModel>> readCartData() async {
-    final data = await _dbHelper.getDbData();
-    print('the data of sqflite are $data');
+  Future<List<CartModel>?> readCartData() async {
+    List<CartModel>? data = await _dbHelper.getDbData();
     _addItemToCart.addAll(data!);
-    notifyListeners();
-    return data;
+    //return data;
   }
 
   removeItemFromCart({int? itemId}) async {

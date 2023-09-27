@@ -14,8 +14,6 @@ class FavoriteItemSc extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     AppLocale appLocale = AppLocale.of(context);
-    final productVMdl = Provider.of<ProductViewModel>(context);
-    final favoriteViewModel = Provider.of<FavoriteViewModel>(context);
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.white,

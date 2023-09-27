@@ -19,7 +19,16 @@ class CategoriesSc extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColor.kBackgroundColor,
       body: SafeArea(
-        child: ListView.builder(
+        child: 
+        ListView.separated(
+          separatorBuilder: (context,int index){
+            return Divider(
+              endIndent: 2.h,
+              indent: 2.h,
+              thickness: 0.09.h,
+              color: Colors.grey,
+            );
+          },
           itemCount: catViewModel.getCategoryTitle(productViewModel.productModelView!).length,
           itemBuilder: (context, index) {
             var catItems = productViewModel.productModelView!;
@@ -51,12 +60,6 @@ class CategoriesSc extends StatelessWidget {
                       },)
                     ],
                   ),
-                ),
-                Divider(
-                  endIndent: 2.h,
-                  indent: 2.h,
-                  thickness: 0.05.h,
-                  color: Colors.grey,
                 ),
               ],
             );

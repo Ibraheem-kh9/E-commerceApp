@@ -6,7 +6,6 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
-
 import '../core/services/auth_services.dart';
 import '../core/utils/constants/app_routes.dart';
 import '../core/utils/constants/constant_color.dart';
