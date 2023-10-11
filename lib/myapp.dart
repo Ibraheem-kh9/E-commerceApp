@@ -12,6 +12,7 @@ import 'package:e_commerce_app/view/screens/categories_sc.dart';
 import 'package:e_commerce_app/view/screens/category_item_order_sc.dart';
 import 'package:e_commerce_app/view_model/app_language_view_model.dart';
 import 'package:e_commerce_app/view_model/item_category_view_model.dart';
+import 'package:e_commerce_app/view_model/more_bar_view_model/my_order_view_model.dart';
 import 'package:e_commerce_app/view_model/order_item_view_model.dart';
 import 'package:e_commerce_app/view_model/register/mail_verification_view_model.dart';
 import 'package:e_commerce_app/view_model/register/register_view_model.dart';
@@ -60,6 +61,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => CartViewModel()),
         ChangeNotifierProvider(create: (_) => ItemDetailsViewModel()),
         ChangeNotifierProvider(create: (_) => SettingViewModel()),
+        ChangeNotifierProvider(create: (_) => MyOrdersViewModel()),
         StreamProvider<ConnectivityStatus>(
           create: (context) =>
               ConnectivityServices().connectionController.stream,
