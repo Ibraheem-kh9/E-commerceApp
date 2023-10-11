@@ -1,3 +1,4 @@
+import 'package:e_commerce_app/core/utils/constants/app_routes.dart';
 import 'package:e_commerce_app/models/products_model.dart';
 import 'package:e_commerce_app/view/widgets/order_item_widget/order_sub_widget/btn_action_widget.dart';
 import 'package:e_commerce_app/view/widgets/order_item_widget/order_sub_widget/btn_inc_dec_sub_widget.dart';
@@ -40,13 +41,14 @@ class OrderDetailsAddSubWidget extends StatelessWidget {
             topRight: Radius.circular(5.h),
           )),
       child: FutureBuilder(
+        //future: cartViewModel.readCartData(),
         future: orderItemViewModel.showData(),
-        builder: (context,snapshot){
-          if(snapshot.connectionState == ConnectionState.done){
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
             return Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Consumer<OrderItemViewModel>(builder: (context, notify, child) {
-                  print('the id is $id and index is $index');
                   return TotalPriceSection(
                     price: orderItemViewModel.orderItemTotalPrice(
                       id: id,
@@ -58,10 +60,7 @@ class OrderDetailsAddSubWidget extends StatelessWidget {
                   increaseWidget: BtnIncDecWidget(
                     onTap: () {
                       orderItemViewModel.decrementProductQty(
-                        /*productViewModel,*/
-                          index: index,
-                          id: id,
-                          price: productModel!.price!);
+                          index: index, id: id, price: productModel!.price!);
                     },
                     icon: Icons.remove,
                   ),
@@ -69,9 +68,7 @@ class OrderDetailsAddSubWidget extends StatelessWidget {
                   decreaseWidget: BtnIncDecWidget(
                     onTap: () {
                       orderItemViewModel.incrementProductQty(
-                          index: index,
-                          id: id,
-                          price: productModel!.price!);
+                          index: index, id: id, price: productModel!.price!);
                     },
                     icon: Icons.add,
                   ),
@@ -87,13 +84,23 @@ class OrderDetailsAddSubWidget extends StatelessWidget {
                           itemName: productModel?.title,
                           itemImage: productModel?.thumbnail,
                           itemPrice: productModel?.price!.toDouble(),
-                          itemQty: context.read<OrderItemViewModel>().qty,
-                          itemTotalPrices:
-                          context.read<OrderItemViewModel>().itemPrice.toDouble(),
+                          itemQty:  context.read<OrderItemViewModel>().qty,
+                          itemTotalPrices: context.read<OrderItemViewModel>().itemPrice.toDouble(),
                         );
 
-                        await cartViewModel.insertItemToCart(cartModel);
-                        cartViewModel.increaseCounter();
+                        // await cartViewModel.insertItemToCart(cartModel);
+                        // cartViewModel.increaseCounter();
+
+                        orderItemViewModel.checkCartId(productModel!.id!) == false
+                            ? await cartViewModel.insertItemToCart(cartModel,productModel!.id!)
+                            : await orderItemViewModel.updateCartData(
+                                index: index,
+                                id: productModel!.id!,
+                              );
+
+                        orderItemViewModel.checkCartId(productModel!.id!) == false
+                            ? cartViewModel.increaseCounter()
+                            : null;
                       },
                       text: 'Save',
                       backgroundColor: AppColor.kBackgroundColor,
@@ -101,7 +108,9 @@ class OrderDetailsAddSubWidget extends StatelessWidget {
                       textColor: AppColor.kMainColor,
                     ),
                     BtnActionWidget(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.pushReplacementNamed(context, AppRoute.cart);
+                      },
                       text: 'Order now',
                       backgroundColor: AppColor.kMainColor,
                       borderColor: AppColor.kMainColor,
@@ -112,9 +121,8 @@ class OrderDetailsAddSubWidget extends StatelessWidget {
               ],
             );
           }
-          return CircularProgressIndicator();
+          return const Center(child: CircularProgressIndicator());
         },
-
       ),
     );
   }

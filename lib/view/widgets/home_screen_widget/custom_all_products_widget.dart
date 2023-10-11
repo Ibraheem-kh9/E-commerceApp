@@ -1,8 +1,9 @@
+import 'package:e_commerce_app/view_model/cart_view_model.dart';
 import 'package:e_commerce_app/view_model/favorite_view_model.dart';
 import 'package:e_commerce_app/view_model/product_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
-
 import '../../../models/products_model.dart';
 import '../../screens/order_item_sc.dart';
 import 'custom_all_products_widget/card_brand_section.dart';
@@ -50,7 +51,7 @@ class CustomAllProductsWidget extends StatelessWidget {
 
               Navigator.push(context, MaterialPageRoute(builder: (context) {
                 return OrderItemSc(
-                  index : index1,
+                  index: index1,
                   product: product,
                   productViewModel: productViewModel,
                 );
@@ -60,6 +61,9 @@ class CustomAllProductsWidget extends StatelessWidget {
               key: Key('det_$index1'),
               clipBehavior: Clip.antiAliasWithSaveLayer,
               decoration: BoxDecoration(
+                  border: context
+                      .watch<CartViewModel>()
+                      .setIsAddedStatus(id: product.id),
                   color: Colors.white,
                   borderRadius: BorderRadius.all(Radius.circular(2.5.h))),
               padding: EdgeInsets.only(left: 1.h, right: 1.h),
@@ -93,33 +97,6 @@ class CustomAllProductsWidget extends StatelessWidget {
                     price: product.price!,
                     priceAfterDisc: product.discountPercentage!.toInt(),
                   ),
-                  // CustomCardDiscPercWidget(
-                  //               percentage:
-                  //                   product.discountPercentage!.floor()),
-                  // Favorite Button of each Item --------------------
-
-                  // Positioned(
-                  //   top: 33.h,
-                  //   right: 1.5.h,
-                  //   left: 1.5.h,
-                  //   child: Padding(
-                  //     padding: EdgeInsets.only(left: 0.4.h, right: 0.4.h),
-                  //     child: Row(
-                  //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  //       children: [
-                  //         CustomCardDiscPercWidget(
-                  //             percentage:
-                  //                 product.discountPercentage!.floor()),
-                  //         // Favorite Button of each Item --------------------
-                  //         FavoriteButtonWidget(
-                  //           itemIndex: index1,
-                  //           scaffoldMessengerState:
-                  //               favoriteViewModel.scaffoldMessengerKey,
-                  //         ),
-                  //       ],
-                  //     ),
-                  //   ),
-                  // ),
                 ],
               ),
             ),

@@ -37,7 +37,7 @@ class SettingSc extends StatelessWidget {
               ),
               SettingCardWidget(
                 onPress: () {
-                  Navigator.pushNamed(context, AppRoute.comingSoon);
+                  Navigator.pushNamed(context, AppRoute.myOrders);
                 },
                 imageName: AppIcons.orderIcon,
                 text: appLocale.getTranslated('setting_my_order')!,

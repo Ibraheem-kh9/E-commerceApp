@@ -41,8 +41,7 @@ class LoginViewModel with ChangeNotifier {
     return authService.firebaseAuth.userChanges().map(_userFromFirebase);
   }
 
-  Future/*<UsersModel>*/ signInWithEmailAndPassword(
-      UsersModel usersModel) async {
+  Future signInWithEmailAndPassword(UsersModel usersModel) async {
     showDialog(
         context: navigatorKey.currentContext!,
         barrierDismissible: false,

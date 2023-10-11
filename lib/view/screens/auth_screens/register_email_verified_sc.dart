@@ -59,7 +59,8 @@ class _RegisterEmailVerifiedScState extends State<RegisterEmailVerifiedSc> {
             TextButton(
               onPressed: () {
                 context.read<LoginViewModel>().signOut();
-                Navigator.pushReplacementNamed(context, AppRoute.login);
+                Navigator.pushNamedAndRemoveUntil(context, AppRoute.login, (route) => false);
+                //Navigator.pushReplacementNamed(context, AppRoute.login);
               },
               child: Text(
                 localeLang.getTranslated('register_email_verified_btn_cancel')!,
