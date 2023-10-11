@@ -1,60 +1,74 @@
-import 'package:e_commerce_app/models/favorite_model.dart';
-import 'package:e_commerce_app/models/products_model.dart';
-
+import 'package:e_commerce_app/core/services/auth_services.dart';
+import 'package:e_commerce_app/core/utils/constants/constant_color.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+import 'package:sizer/sizer.dart';
 import '../core/services/db_helper.dart';
 import '../models/cart_model.dart';
+import '../myapp.dart';
 
 class CartViewModel extends ChangeNotifier {
   final DbHelper _dbHelper = DbHelper();
+  final AuthService _authService = AuthService();
+  User? _user;
 
   DbHelper get dbHelper => _dbHelper;
-  final List<CartModel> _items = [];
+
+  final List<CartModel> _addItemToCart = [];
   int _counter = 0;
-  bool _isAdded = false;
-  int _qty = 0;
-  double _totalPrice = 0.0;
   double _cartLineTotal = 0;
   int shipping = 3;
-  bool _isSelected = false;
 
   int get counter => _counter;
 
-  List<CartModel> get items => _items;
-
-  bool get isAdded => _isAdded;
-
-  int get itemQuantity => _qty;
-
-  double get totalPrice => _totalPrice;
-
   double get cartLineTotal => _cartLineTotal;
 
-  bool? get isSelected => _isSelected;
+  List<CartModel> get addItemToCart => _addItemToCart;
 
-  /// --------------------------------------------------------------------------
   CartViewModel() {
     readCartData();
   }
 
-  ///////////////////
-  List<CartModel> _addItemToCart = [];
+  /// CRUD methods -------------------------------------------------------------
 
-  List<CartModel> get addItemToCart => _addItemToCart;
+  Future<List<CartModel>?> readCartData() async {
+    List<CartModel>? data = await _dbHelper.getDbData();
+    //_addItemToCart.addAll(data!.map((e) => e) as Map<String, CartModel>);
+    _addItemToCart.addAll(data!);
+    return data;
+  }
 
-  insertItemToCart(CartModel cartModel) async {
+  insertItemToCart(CartModel cartModel,int id) async {
+
     _addItemToCart.add(cartModel);
     int response = await _dbHelper.insertDb(cartModel);
+    print('$response of insert');
     notifyListeners();
     return response;
   }
 
-  Future<List<CartModel>?> readCartData() async {
-    List<CartModel>? data = await _dbHelper.getDbData();
-    _addItemToCart.addAll(data!);
-    //return data;
+  Future updateCartData({
+    int? index,
+    int? id,
+  }) async {
+    CartModel cartModel = CartModel(
+      id: _addItemToCart[index!].itemId,
+      itemName: _addItemToCart[index].itemName,
+      itemPrice: _addItemToCart[index].itemPrice,
+      itemImage: _addItemToCart[index].itemImage,
+      itemId: _addItemToCart[index].itemId,
+      itemQty: _addItemToCart[index].itemQty,
+      itemTotalPrices: _addItemToCart[index].itemTotalPrices,
+    );
+    int? update = await _dbHelper.updateDb(cartModel: cartModel, id: id);
+    _addItemToCart.add(cartModel);
+    print(
+        '${_addItemToCart[index].itemQty} , ${_addItemToCart[index].itemTotalPrices}, ${_addItemToCart[index].itemName}');
+    print('$update of update');
+    notifyListeners();
+    return update;
   }
 
   removeItemFromCart({int? itemId}) async {
@@ -64,7 +78,15 @@ class CartViewModel extends ChangeNotifier {
     return response;
   }
 
-  /// counter of cart icon that display how many item added --------------------
+  //// end of CRUD methods -----------------------------------------------------
+
+  /// counter of cart icon -----------------------------------------------------
+
+  getCounter() {
+    _getPrefItems();
+    return _counter;
+  }
+
   increaseCounter() {
     _counter++;
     _setPrefItems();
@@ -77,10 +99,13 @@ class CartViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  getCounter() {
-    _getPrefItems();
-    return _counter;
+  resetCounter() {
+    _counter = 0;
+    _setPrefItems();
+    notifyListeners();
   }
+
+  //// end of counter methods --------------------------------------------------
 
   double get cartSubPrice => _addItemToCart.fold(
         0,
@@ -93,58 +118,16 @@ class CartViewModel extends ChangeNotifier {
     return total;
   }
 
-  /// --------------------------------------------------------------------------
-  ///
-  ///
-  ///
-
-  cartTotalPriceIncrease({int? qty, double? itemTotalPrice}) {
-    _cartLineTotal = qty! * itemTotalPrice!;
-    _setPrefItems();
-    notifyListeners();
-    return _cartLineTotal;
+  setIsAddedStatus({int? id}) {
+    for (var element in _addItemToCart) {
+      if (element.itemId == id) {
+        return Border.all(color: AppColor.kIconColor);
+      }
+    }
+    return const Border();
   }
 
-  cartTotalPriceDecrease({int? qty, int? itemPrice}) {
-    _cartLineTotal = qty! * itemPrice! - 1;
-    _setPrefItems();
-    notifyListeners();
-    return _cartLineTotal;
-  }
-
-  getCartTotalPrice() {
-    _getPrefItems();
-    return _cartLineTotal;
-  }
-
-  setIsAddedStatus(bool status, int index) {
-    _isAdded == status && FavoriteModel().id == index;
-    print(status);
-    notifyListeners();
-  }
-
-
-
-
-  dynamic cartSubTotalPrice(double price) {
-    _cartLineTotal = _cartLineTotal + price;
-    return _cartLineTotal;
-  }
-
-  dynamic cartSubTotalPriceRemove(double price) {
-    _cartLineTotal = (_cartLineTotal - price);
-    return _cartLineTotal;
-  }
-
-
-
-
-
-  // Future<void> saveCart() async {
-  //   final prefs = await _prefs;
-  //   final cartJson = _items.map((item) => item.toJson()).toList();
-  //   await prefs.setString('cart', json.encode(cartJson));
-  // }
+  /// shared preference methods ------------------------------------------------
 
   void _setPrefItems() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
@@ -160,29 +143,58 @@ class CartViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  /// Is add item to cart highlight
+  //// end of shared preference method -----------------------------------------
 
-  setCartSelectedItems({bool? selectStatus, int? id}) {
-    _isSelected = selectStatus!;
-    _setPrefItemToCart();
-    notifyListeners();
-  }
+  saveOrder() async {
+    showDialog(
+      context: navigatorKey.currentContext!,
+      barrierDismissible: false,
+      // Prevent user from dismissing the dialog by tapping outside
+      builder: (BuildContext context) {
+        return Dialog(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          shadowColor: Colors.transparent,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12.h),
+          ),
+          child: Padding(
+            padding: EdgeInsets.all(12.h),
+            child: ColorFiltered(
+              colorFilter: const ColorFilter.mode(
+                AppColor.kMainColor,
+                BlendMode.srcIn,
+              ),
+              child: Lottie.asset(
+                'assets/lottie_files/loading_icon.json',
+                width: 20.h,
+                height: 20.h,
+              ),
+            ),
+          ),
+        );
+      },
+    );
 
-  void _setPrefItemToCart() async {
-    SharedPreferences _pref = await SharedPreferences.getInstance();
-    _pref.setBool('selected', _isSelected);
-    notifyListeners();
-  }
-
-  void _getPrefItemToCart() async {
-    SharedPreferences _pref = await SharedPreferences.getInstance();
-    _pref.getBool('selected') ?? false;
-    notifyListeners();
-  }
-
-  getSelectedItem() {
-    _getPrefItemToCart();
-    //notifyListeners();
-    return _isSelected;
+    try {
+      _user = _authService.firebaseAuth.currentUser;
+      var firebase = _authService.firestore
+          .collection('OrderDetails')
+          .doc(_user!.email)
+          .collection('orders')
+          .doc();
+      await firebase.set({
+        'cart1': _addItemToCart.asMap().values.map((e) => e.toJson1()).toList(),
+        'date': DateTime.now(),
+        'total Amount': cartTotalPrices,
+        'no of item' : _addItemToCart.length,
+      });
+      await _dbHelper.clearCartData();
+      _addItemToCart.clear();
+      resetCounter();
+    } catch (e) {
+      rethrow;
+    }
+    navigatorKey.currentState!.pop();
   }
 }

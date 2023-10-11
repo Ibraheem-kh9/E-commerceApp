@@ -50,7 +50,7 @@ class CustomCartSummaryWidget extends StatelessWidget {
                   fontColor: AppColor.kGreyColor,
                 ),
                 CartTextWidget(
-                  text: '${cartViewModel.shipping} \$',
+                  text: '${cartViewModel.addItemToCart.isNotEmpty ? cartViewModel.shipping : 0} \$',
                   fontSize: 16.sp,
                   fontColor: AppColor.kDefaultTextColor,
                 ),
@@ -80,7 +80,9 @@ class CustomCartSummaryWidget extends StatelessWidget {
             Align(
               alignment: Alignment.center,
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  cartViewModel.saveOrder();
+                },
                 style: ButtonStyle(
                   backgroundColor:
                       const MaterialStatePropertyAll(AppColor.kMainColor),

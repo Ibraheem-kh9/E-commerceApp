@@ -29,7 +29,7 @@ class CartModel {
     );
   }
 
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson1() {
     return {
       "id": this.id,
       "itemId": this.itemId,
