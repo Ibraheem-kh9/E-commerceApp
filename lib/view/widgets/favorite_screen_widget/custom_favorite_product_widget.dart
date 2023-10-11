@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:e_commerce_app/view/screens/order_item_sc.dart';
 import 'package:e_commerce_app/view/widgets/favorite_screen_widget/custom_favorite_product_widget/fav_card_brand_section.dart';
 import 'package:e_commerce_app/view/widgets/favorite_screen_widget/custom_favorite_product_widget/fav_card_price_section.dart';
 import 'package:e_commerce_app/view/widgets/favorite_screen_widget/custom_favorite_product_widget/fav_card_title_widget.dart';
@@ -9,15 +10,18 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../../core/utils/constants/app_routes.dart';
 import '../../../models/products_model.dart';
 
 class CustomFavoriteProductsWidget extends StatelessWidget {
   final List<QueryDocumentSnapshot<Object?>> snapshot;
+
   const CustomFavoriteProductsWidget({super.key, required this.snapshot});
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<FavoriteViewModel>(builder: (context, favoriteNotify,child){
+    return Consumer<FavoriteViewModel>(
+        builder: (context, favoriteNotify, child) {
       return Container(
         padding: EdgeInsets.only(left: 1.h, right: 1.h),
         height: 80.h,
@@ -35,20 +39,18 @@ class CustomFavoriteProductsWidget extends StatelessWidget {
           itemBuilder: (context, index1) {
             //ProductModel favoriteProduct = favoriteNotify.favoriteDataList![index1];
             DocumentSnapshot documentSnapshot = snapshot[index1];
+
             /// set favorite value
             return GestureDetector(
               onTap: () {
-                // Navigator.pushNamed(context, AppRoute.itemDetailOrderSc,arguments: {
-                //         product: product,
-                //         userViewModel: userViewModel,
-                //     });
+                Navigator.pushNamed(context, AppRoute.itemDetailOrderSc,
+                    arguments: {documentSnapshot});
 
-                /* Navigator.push(context, MaterialPageRoute(builder: (context) {
-                return ItemDetailOrderSc(
-                  product: product,
-                  userViewModel: productViewModel,
-                );
-              }));*/
+                //    Navigator.push(context, MaterialPageRoute(builder: (context) {
+                //   return OrderItemSc(
+                //     product: documentSnapshot as ProductModel,
+                //   );
+                // }));
               },
               child: Container(
                 key: Key('det_$index1'),
@@ -70,8 +72,8 @@ class CustomFavoriteProductsWidget extends StatelessWidget {
                           right: 0.8.h,
                           child: FavDeleteItemButtonIcon(
                             index: snapshot[index1]['id'],
-                           // favoriteViewModel: favoriteNotify,
-                           // favoriteProduct: favoriteProduct,
+                            // favoriteViewModel: favoriteNotify,
+                            // favoriteProduct: favoriteProduct,
                             //  scaffoldMessengerState:
                             //      favoriteViewModel.scaffoldMessengerKey,
                           ),
@@ -90,9 +92,9 @@ class CustomFavoriteProductsWidget extends StatelessWidget {
 
                     FavCardPriceSection(
                       price: documentSnapshot['price'],
-                    //  price: favoriteProduct.price!,
+                      //  price: favoriteProduct.price!,
                       priceAfterDisc: documentSnapshot['discountPercentage'],
-                   //   priceAfterDisc: favoriteProduct.discountPercentage!.toInt(),
+                      //   priceAfterDisc: favoriteProduct.discountPercentage!.toInt(),
                     ),
                     // CustomCardDiscPercWidget(
                     //               percentage:
