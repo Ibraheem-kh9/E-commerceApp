@@ -16,15 +16,14 @@ class DbHelper {
   }
 
   initDatabase() async {
-    try{
+    try {
       io.Directory documentDirectory = await getApplicationDocumentsDirectory();
       String path = join(documentDirectory.path, 'cart.db');
       var db = await openDatabase(path, version: 1, onCreate: _onCreate);
       return db;
-    }catch (e){
-       return MissingPlatformDirectoryException('No Directory Found');
+    } catch (e) {
+      return MissingPlatformDirectoryException('No Directory Found');
     }
-
   }
 
   _onCreate(Database db, int version) async {
@@ -36,15 +35,25 @@ class DbHelper {
     var dbClient = await db;
     final List<Map<String, dynamic>>? dbResult = await dbClient?.query('cart');
     return dbResult?.map((e) => CartModel.fromJson(e)).toList();
-
   }
 
   Future<int> insertDb(CartModel cartModel) async {
     var dbClient = await db;
-    int response = await dbClient!.insert('cart', cartModel.toJson());
+    int response = await dbClient!.insert('cart', cartModel.toJson1());
     return response;
   }
 
+  Future<int?> updateDb({CartModel? cartModel, int? id}) async {
+    var dbClient = await db;
+
+    int value = await dbClient!.update(
+      'cart',
+      cartModel!.toJson1(),
+      where: 'itemId = ?',
+      whereArgs: [id],
+    );
+    return value;
+  }
 
   Future<int> deleteItemFromCart(int id) async {
     var dbClient = await db;
@@ -57,11 +66,19 @@ class DbHelper {
 
   Future<List<CartModel>> getItemById(int id) async {
     var dbClient = await db;
-    var data =  await dbClient!.query(
+    var data = await dbClient!.query(
       'cart',
-      where: ' itemId =   ?',
+      where: ' itemId = ?',
       whereArgs: [id],
     );
     return data.map((e) => CartModel.fromJson(e)).toList();
+  }
+
+  Future<int> clearCartData() async {
+    var dbClient = await db;
+    int data = await dbClient!.delete(
+      'cart',
+    );
+    return data;
   }
 }

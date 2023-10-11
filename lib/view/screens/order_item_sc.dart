@@ -11,7 +11,6 @@ import 'package:sizer/sizer.dart';
 import '../../core/utils/constants/constant_color.dart';
 import '../../models/favorite_model.dart';
 import '../widgets/order_item_widget/image_order_slider_widget.dart';
-import '../widgets/order_item_widget/item_order_addtocart_button_widget.dart';
 import '../widgets/order_item_widget/item_text_widget.dart';
 import '../widgets/order_item_widget/order_image_list_widget.dart';
 
@@ -32,6 +31,7 @@ class OrderItemSc extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //final orderViewModel = context.read<ItemDetailsViewModel>();
+    //var product1 = ModalRoute.of(context)!.settings.arguments;
     return Scaffold(
       backgroundColor: AppColor.kBackgroundColor,
       body: SafeArea(

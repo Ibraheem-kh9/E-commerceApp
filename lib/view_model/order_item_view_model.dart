@@ -16,6 +16,7 @@ class OrderItemViewModel with ChangeNotifier {
   int get qty => _qty;
 
   int get itemPrice => _itemPrice;
+  DbHelper get _dbHelper => DbHelper();
 
   @override
   dispose() {
@@ -24,15 +25,44 @@ class OrderItemViewModel with ChangeNotifier {
   }
 
   OrderItemViewModel() {
-
     showData();
   }
 
-   Future<List<CartModel>?> showData() async {
-
-    List<CartModel>? data = await dbHelper.getDbData();
+  Future<List<CartModel>?> showData() async {
+    List<CartModel>? data = await _dbHelper.getDbData();
     _cartItem.addAll(data!);
+    return data;
+  }
 
+
+
+  //////
+
+  Future updateCartData({ int? index, int? id, }) async {
+    CartModel cartModel =CartModel(
+      id: _cartItem[index!].itemId,
+      itemName: _cartItem[index].itemName,
+      itemPrice: _cartItem[index].itemPrice,
+      itemImage: _cartItem[index].itemImage,
+      itemId: _cartItem[index].itemId,
+      itemQty: _cartItem[index].itemQty,
+      itemTotalPrices: _cartItem[index].itemTotalPrices,
+    );
+    int? update = await _dbHelper.updateDb(cartModel: cartModel, id: id);
+    _cartItem.add(cartModel);
+    print('${_cartItem[index].itemQty} , ${_cartItem[index].itemTotalPrices}, ${_cartItem[index].itemName}');
+    print('$update of update');
+    notifyListeners();
+    return update;
+  }
+
+
+
+  checkCartId(int itemId) {
+
+    bool id = _cartItem.any((element) => element.itemId == itemId);
+    //notifyListeners();
+    return id;
   }
 
   incrementProductQty({
@@ -52,15 +82,6 @@ class OrderItemViewModel with ChangeNotifier {
       _itemPrice = _qty * price!;
       notifyListeners();
     }
-
-    // final index = productViewModel.productModelView!
-    //     .indexWhere((ProductModel product) => product.id == id);
-    // if (index >= 0) {
-    //   productViewModel.productModelView?[index].itemQty = _qty++;
-    //   _itemPrice = _qty * price;
-    //   print(_qty);
-    //   notifyListeners();
-    // }
   }
 
   decrementProductQty({
