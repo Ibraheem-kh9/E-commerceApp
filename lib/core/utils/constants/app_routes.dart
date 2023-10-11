@@ -21,4 +21,5 @@ class AppRoute {
   static const String language = '/language';
   static const String comingSoon = '/comingSoon';
   static const String changePassword = '/changePassword';
+  static const String myOrders = '/myOrders';
 }

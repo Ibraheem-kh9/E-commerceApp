@@ -3,6 +3,7 @@ import 'package:e_commerce_app/view/screens/auth_screens/login_page_sc.dart';
 import 'package:e_commerce_app/view/screens/cart_sc.dart';
 import 'package:e_commerce_app/view/screens/favorite_item_sc.dart';
 import 'package:e_commerce_app/view/screens/item_category_sc.dart';
+import 'package:e_commerce_app/view/screens/more_bar_screens/myorders_sc.dart';
 import 'package:e_commerce_app/view/screens/order_item_sc.dart';
 import 'package:e_commerce_app/view/screens/categories_sc.dart';
 import 'package:e_commerce_app/view/screens/more_bar_screens/change_language_sc.dart';
@@ -41,4 +42,5 @@ Map<String, Widget Function(BuildContext)> routes = {
   AppRoute.language: (context) => const ChangeLanguageSc(),
   AppRoute.comingSoon: (context) => const ComingSoonSc(),
   AppRoute.changePassword: (context) => const UpdateUserPasswordSc(),
+  AppRoute.myOrders: (context) => const MyOrdersSc(),
 };
